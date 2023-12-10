@@ -1,3 +1,4 @@
+# 環境構築関係
 ## nextの雛形を作成
 npx create-next-app open-memo-next
 
@@ -8,3 +9,10 @@ npx create-next-app open-memo-next
 ✔ Use App Router (recommended)? … Yes
 ✔ Would you like to customize the default import alias? … No
 
+モジュールのインストール
+npm install axios
+
+# 参考資料関係
+
+認証関係の参考に
+https://qiita.com/RYA234/items/c41632ef5101f0db0b5d
