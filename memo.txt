@@ -11,8 +11,17 @@ npx create-next-app open-memo-next
 
 モジュールのインストール
 npm install axios
+npm install --save @types/react-bootstrap
 
 # 参考資料関係
 
 認証関係の参考に
 https://qiita.com/RYA234/items/c41632ef5101f0db0b5d
+axios使ってのGET時にカスタムヘッダーが効かない対処法
+https://qiita.com/taikai_m/items/1ec5e4e4b2ccbe8adf76
+java側の実装修正
+https://github.com/spring-boot-react-nextjs/security-spring-boot-jwt-postgresql-docker/blob/main/src/main/java/com/springbootreactnextjs/security/config/JwtService.java
+https://zenn.dev/kiyotatakeshi/articles/d12a850f232d71
+
+ログイン画面参考
+https://reffect.co.jp/react/react-hook-form-ts
