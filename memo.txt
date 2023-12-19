@@ -11,7 +11,10 @@ npx create-next-app open-memo-next
 
 モジュールのインストール
 npm install axios
+
+npm install react-bootstrap bootstrap
 npm install --save @types/react-bootstrap
+npm install --save-dev @types/react-bootstrap @types/bootstrap
 
 # 参考資料関係
 
@@ -25,3 +28,12 @@ https://zenn.dev/kiyotatakeshi/articles/d12a850f232d71
 
 ログイン画面参考
 https://reffect.co.jp/react/react-hook-form-ts
+
+画面遷移などの参考に
+https://qiita.com/RYA234/items/c41632ef5101f0db0b5d
+https://zenn.dev/furai_mountain/articles/b54c83f3dd4558
+
+
+# 参考ドキュメント
+ReactBootstrap公式ドキュメント
+https://react-bootstrap.netlify.app/
