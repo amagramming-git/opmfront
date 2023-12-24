@@ -15,6 +15,7 @@ npm install axios
 npm install react-bootstrap bootstrap
 npm install --save @types/react-bootstrap
 npm install --save-dev @types/react-bootstrap @types/bootstrap
+npm install react-hook-form
 
 # 参考資料関係
 
@@ -37,3 +38,5 @@ https://zenn.dev/furai_mountain/articles/b54c83f3dd4558
 # 参考ドキュメント
 ReactBootstrap公式ドキュメント
 https://react-bootstrap.netlify.app/
+useForm
+https://react-hook-form.com/docs/useform/register
