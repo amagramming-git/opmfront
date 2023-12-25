@@ -16,6 +16,12 @@ npm install react-bootstrap bootstrap
 npm install --save @types/react-bootstrap
 npm install --save-dev @types/react-bootstrap @types/bootstrap
 npm install react-hook-form
+npm install @reduxjs/toolkit
+npm install react-redux
+npm install redux
+npm install redux react-redux @reduxjs/toolkit redux-logger --save
+npm install @types/react-redux @types/redux-logger --save-dev
+
 
 # 参考資料関係
 
@@ -34,9 +40,14 @@ https://reffect.co.jp/react/react-hook-form-ts
 https://qiita.com/RYA234/items/c41632ef5101f0db0b5d
 https://zenn.dev/furai_mountain/articles/b54c83f3dd4558
 
+ReduxとTypescript
+https://dev.classmethod.jp/articles/react-typescript-redux-toolkit/
 
 # 参考ドキュメント
 ReactBootstrap公式ドキュメント
 https://react-bootstrap.netlify.app/
 useForm
 https://react-hook-form.com/docs/useform/register
+ReduxとTypescript
+https://redux.js.org/usage/usage-with-typescript
+https://qiita.com/keitakn/items/7433c89ce52073e861a1

@@ -1,5 +1,5 @@
 import { login } from "@/components/auth/login";
-import { Alert, Button, Form, Row } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";

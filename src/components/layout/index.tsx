@@ -1,10 +1,24 @@
 import Link from "next/link";
-import { Alert, Container, Button, Navbar } from "react-bootstrap";
+import { Container, Button, Navbar } from "react-bootstrap";
 import utilStyles from "@/styles/utils.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { useHeaderAlertState } from "@/store/slices/headerAlertSelector";
+import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import HeaderAlert from "./HeaderAlert";
 
 const Layout = (props: any) => {
 	const [flg, setFlg] = useState(false);
+	const state = useHeaderAlertState().headerAlert;
+	const dispatch = useDispatch();
+	const onClickView = () => {
+		dispatch(headerAlertSlice.actions.view("ああああ"));
+	};
+	const onClickHidden = () => {
+		dispatch(headerAlertSlice.actions.hidden());
+	};
+
 	return (
 		<>
 			<header>
@@ -45,6 +59,17 @@ const Layout = (props: any) => {
 						</Navbar.Collapse>
 					</Container>
 				</Navbar>
+				<Button onClick={onClickView} variant="primary" className="me-2">
+					onClickView
+				</Button>
+				<Button onClick={onClickHidden} variant="primary" className="me-2">
+					onClickHidden
+				</Button>
+				{state.viewflag ? (
+					<HeaderAlert variant={state.variant} message={state.message} />
+				) : (
+					<></>
+				)}
 			</header>
 			<main>{props.children}</main>
 		</>

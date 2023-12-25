@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.0.1",
     "@types/node": "20.10.4",
     "@types/react": "18.2.42",
     "@types/react-dom": "18.2.17",
@@ -21,10 +22,15 @@
     "react-bootstrap": "^2.9.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.49.2",
+    "react-redux": "^9.0.4",
+    "redux": "^5.0.1",
+    "redux-logger": "^3.0.6",
     "typescript": "5.3.3"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
-    "@types/react-bootstrap": "^0.32.35"
+    "@types/react-bootstrap": "^0.32.35",
+    "@types/react-redux": "^7.1.33",
+    "@types/redux-logger": "^3.0.12"
   }
 }
