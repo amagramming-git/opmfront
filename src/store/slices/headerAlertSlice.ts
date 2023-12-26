@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type HeaderAlertState = {
+interface HeaderAlertState {
 	viewflag: boolean;
 	variant: string;
 	message: string;
-};
+}
 
-export const initialState: HeaderAlertState = {
+const initialState: HeaderAlertState = {
 	viewflag: false,
 	variant: "danger",
 	message: "",

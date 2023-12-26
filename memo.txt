@@ -42,6 +42,7 @@ https://zenn.dev/furai_mountain/articles/b54c83f3dd4558
 
 ReduxとTypescript
 https://dev.classmethod.jp/articles/react-typescript-redux-toolkit/
+https://qiita.com/keitakn/items/7433c89ce52073e861a1
 
 # 参考ドキュメント
 ReactBootstrap公式ドキュメント
@@ -50,4 +51,3 @@ useForm
 https://react-hook-form.com/docs/useform/register
 ReduxとTypescript
 https://redux.js.org/usage/usage-with-typescript
-https://qiita.com/keitakn/items/7433c89ce52073e861a1

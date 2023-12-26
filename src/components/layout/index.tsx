@@ -1,23 +1,30 @@
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Container, Button, Navbar } from "react-bootstrap";
 import utilStyles from "@/styles/utils.module.css";
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { useHeaderAlertState } from "@/store/slices/headerAlertSelector";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
 import HeaderAlert from "./HeaderAlert";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
 
 const Layout = (props: any) => {
+	const state = useAppSelector((state) => state.headerAlert);
+	const dispatch = useAppDispatch();
 	const [flg, setFlg] = useState(false);
-	const state = useHeaderAlertState().headerAlert;
-	const dispatch = useDispatch();
+
 	const onClickView = () => {
 		dispatch(headerAlertSlice.actions.view("ああああ"));
 	};
 	const onClickHidden = () => {
 		dispatch(headerAlertSlice.actions.hidden());
 	};
+
+	// URLが変更された際に実行される処理
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+	useEffect(() => {
+		dispatch(headerAlertSlice.actions.hidden());
+	}, [pathname, searchParams]);
 
 	return (
 		<>
@@ -65,10 +72,8 @@ const Layout = (props: any) => {
 				<Button onClick={onClickHidden} variant="primary" className="me-2">
 					onClickHidden
 				</Button>
-				{state.viewflag ? (
+				{state.viewflag && (
 					<HeaderAlert variant={state.variant} message={state.message} />
-				) : (
-					<></>
 				)}
 			</header>
 			<main>{props.children}</main>
