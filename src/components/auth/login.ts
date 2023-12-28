@@ -20,11 +20,10 @@ export const login = (email: string, password: string) => {
 					"XSRF-TOKEN",
 					response.headers["x-xsrf-token"]
 				);
-				console.log(response);
 				resolve(response);
 			})
 			.catch((e) => {
-				console.log("認証エラー");
+				console.log("login認証エラー");
 				console.log(e);
 				rejects(e);
 			});

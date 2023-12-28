@@ -12,11 +12,10 @@ export const cookielogin = (token: string) => {
 		axios
 			.get(`http://127.0.0.1:8080/customer/get`, axiosConfig)
 			.then((response) => {
-				console.log(response);
 				resolve(response);
 			})
 			.catch((e) => {
-				console.log("認証エラー");
+				console.log("cookielogin認証エラー");
 				console.log(e);
 				rejects(e);
 			});

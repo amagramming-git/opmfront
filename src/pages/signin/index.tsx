@@ -20,18 +20,21 @@ const signin = () => {
 	const onSubmit = (data: FormInputs) => {
 		login(data.email, data.password)
 			.then((res) => {
-				dispatch(
-					loginCustomerSlice.actions.loginCustomer({
-						auth: true,
-						id: res.data.id,
-						email: res.data.email,
-						username: res.data.username,
-					})
-				);
+				if (res.data.email !== undefined) {
+					dispatch(
+						loginCustomerSlice.actions.loginCustomer({
+							auth: true,
+							id: res.data.id,
+							email: res.data.email,
+							username: res.data.username,
+						})
+					);
+				} else {
+					throw new Error("システムエラー");
+				}
 				router.push("/");
 			})
 			.catch((e) => {
-				console.log(e);
 				dispatch(
 					headerAlertSlice.actions.viewDanger(
 						"次のエラーが発生しました : " + e.message

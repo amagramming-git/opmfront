@@ -8,6 +8,7 @@ import headerAlertSlice from "@/store/slices/headerAlertSlice";
 import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
 import { cookielogin } from "@/components/auth/cookielogin";
 import HeaderAlert from "./HeaderAlert";
+import { logout } from "../auth/logout";
 
 const Layout = (props: any) => {
 	const headerAlertState = useAppSelector((state) => state.headerAlert);
@@ -20,17 +21,21 @@ const Layout = (props: any) => {
 		if (jwtToken) {
 			cookielogin(jwtToken)
 				.then((res) => {
-					dispatch(
-						loginCustomerSlice.actions.loginCustomer({
-							auth: true,
-							id: res.data.id,
-							email: res.data.email,
-							username: res.data.username,
-						})
-					);
+					if (res.data.email !== undefined) {
+						dispatch(
+							loginCustomerSlice.actions.loginCustomer({
+								auth: true,
+								id: res.data.id,
+								email: res.data.email,
+								username: res.data.username,
+							})
+						);
+					} else {
+						throw new Error("システムエラー");
+					}
 				})
 				.catch((e) => {
-					console.log(e);
+					logout();
 					dispatch(
 						headerAlertSlice.actions.viewDanger(
 							"次のエラーが発生しました : " + e.message
