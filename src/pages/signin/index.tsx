@@ -3,6 +3,9 @@ import { Button, Form, Row } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useAppDispatch } from "@/store/hook";
+import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
 
 type FormInputs = {
 	email: string;
@@ -11,17 +14,29 @@ type FormInputs = {
 
 const signin = () => {
 	const router = useRouter();
-	const { register, handleSubmit } = useForm<FormInputs>();
+	const dispatch = useAppDispatch();
 
+	const { register, handleSubmit } = useForm<FormInputs>();
 	const onSubmit = (data: FormInputs) => {
 		login(data.email, data.password)
 			.then((res) => {
-				console.log(res);
-				console.log(window.sessionStorage);
+				dispatch(
+					loginCustomerSlice.actions.loginCustomer({
+						auth: true,
+						id: res.data.id,
+						email: res.data.email,
+						username: res.data.username,
+					})
+				);
 				router.push("/");
 			})
 			.catch((e) => {
 				console.log(e);
+				dispatch(
+					headerAlertSlice.actions.viewDanger(
+						"次のエラーが発生しました : " + e.message
+					)
+				);
 			});
 	};
 

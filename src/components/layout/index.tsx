@@ -1,22 +1,54 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Container, Button, Navbar } from "react-bootstrap";
 import utilStyles from "@/styles/utils.module.css";
-import headerAlertSlice from "@/store/slices/headerAlertSlice";
-import HeaderAlert from "./HeaderAlert";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
+import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
+import { cookielogin } from "@/components/auth/cookielogin";
+import HeaderAlert from "./HeaderAlert";
 
 const Layout = (props: any) => {
-	const state = useAppSelector((state) => state.headerAlert);
+	const headerAlertState = useAppSelector((state) => state.headerAlert);
+	const loginCustomerState = useAppSelector((state) => state.loginCustomer);
 	const dispatch = useAppDispatch();
-	const [flg, setFlg] = useState(false);
 
+	// React初回マウント時にCookieが存在すれば自動的にログインを実施する
+	useEffect(() => {
+		const jwtToken = window.sessionStorage.getItem("token");
+		if (jwtToken) {
+			cookielogin(jwtToken)
+				.then((res) => {
+					dispatch(
+						loginCustomerSlice.actions.loginCustomer({
+							auth: true,
+							id: res.data.id,
+							email: res.data.email,
+							username: res.data.username,
+						})
+					);
+				})
+				.catch((e) => {
+					console.log(e);
+					dispatch(
+						headerAlertSlice.actions.viewDanger(
+							"次のエラーが発生しました : " + e.message
+						)
+					);
+				});
+		}
+	}, []);
+
+	// 後でいらなくなる部分
 	const onClickView = () => {
-		dispatch(headerAlertSlice.actions.view("ああああ"));
+		dispatch(headerAlertSlice.actions.viewDanger("ああああ"));
 	};
 	const onClickHidden = () => {
 		dispatch(headerAlertSlice.actions.hidden());
+	};
+	const onClickLoginCustomer = () => {
+		console.log(loginCustomerState);
 	};
 
 	// URLが変更された際に実行される処理
@@ -38,7 +70,7 @@ const Layout = (props: any) => {
 						</Navbar.Brand>
 						<Navbar.Toggle />
 						<Navbar.Collapse className="justify-content-end">
-							{flg ? (
+							{loginCustomerState.auth ? (
 								<>
 									<Link href={"/signout"} className={utilStyles.defaultLink}>
 										<Button variant="outline-secondary" className="me-2">
@@ -46,7 +78,7 @@ const Layout = (props: any) => {
 										</Button>
 									</Link>
 									<Navbar.Text>
-										<a href="#profile">Mark Otto</a>
+										<a href="#profile">{loginCustomerState.username}</a>
 									</Navbar.Text>
 								</>
 							) : (
@@ -72,8 +104,18 @@ const Layout = (props: any) => {
 				<Button onClick={onClickHidden} variant="primary" className="me-2">
 					onClickHidden
 				</Button>
-				{state.viewflag && (
-					<HeaderAlert variant={state.variant} message={state.message} />
+				<Button
+					onClick={onClickLoginCustomer}
+					variant="primary"
+					className="me-2"
+				>
+					onClickLoginCustomer
+				</Button>
+				{headerAlertState.viewflag && (
+					<HeaderAlert
+						variant={headerAlertState.variant}
+						message={headerAlertState.message}
+					/>
 				)}
 			</header>
 			<main>{props.children}</main>

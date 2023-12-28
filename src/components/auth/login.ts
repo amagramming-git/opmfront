@@ -1,8 +1,7 @@
-import { rejects } from "assert";
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 export const login = (email: string, password: string) => {
-	return new Promise((resolve, rejects) => {
+	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
 		const axiosConfig: AxiosRequestConfig<any> = {
 			headers: {
 				Authorization: "Basic " + window.btoa(email + ":" + password),
@@ -21,6 +20,7 @@ export const login = (email: string, password: string) => {
 					"XSRF-TOKEN",
 					response.headers["x-xsrf-token"]
 				);
+				console.log(response);
 				resolve(response);
 			})
 			.catch((e) => {

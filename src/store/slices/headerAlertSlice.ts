@@ -16,7 +16,7 @@ const headerAlertSlice = createSlice({
 	name: "alertViewSlice",
 	initialState,
 	reducers: {
-		view: (state, action: PayloadAction<string>) => ({
+		viewDanger: (state, action: PayloadAction<string>) => ({
 			viewflag: true,
 			variant: "danger",
 			message: action.payload,

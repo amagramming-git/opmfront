@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import headerAlertSlice from "./slices/headerAlertSlice";
+import loginCustomerSlice from "./slices/loginCustomerSlice";
 
 const store = configureStore({
 	reducer: {
 		headerAlert: headerAlertSlice.reducer,
+		loginCustomer: loginCustomerSlice.reducer,
 	},
 });
 

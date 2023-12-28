@@ -1,7 +1,7 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 export const cookielogin = (token: string) => {
-	return new Promise((resolve, rejects) => {
+	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
 		const axiosConfig: AxiosRequestConfig<any> = {
 			headers: {
 				Authorization: "Bearer " + token,
@@ -10,8 +10,9 @@ export const cookielogin = (token: string) => {
 			data: {},
 		};
 		axios
-			.get(`http://127.0.0.1:8080/customer/me`, axiosConfig)
+			.get(`http://127.0.0.1:8080/customer/get`, axiosConfig)
 			.then((response) => {
+				console.log(response);
 				resolve(response);
 			})
 			.catch((e) => {
