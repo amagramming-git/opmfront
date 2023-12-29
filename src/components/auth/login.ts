@@ -7,7 +7,7 @@ export const login = (email: string, password: string) => {
 				Authorization: "Basic " + window.btoa(email + ":" + password),
 				"Content-Type": "application/json",
 			},
-			data: {},
+			data: {}, //空でも設定しないと、カスタムヘッダーが認識されない
 		};
 		axios
 			.get(`http://127.0.0.1:8080/customer/get`, axiosConfig)
