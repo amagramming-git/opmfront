@@ -45,17 +45,6 @@ const Layout = (props: any) => {
 		}
 	}, []);
 
-	// 後でいらなくなる部分
-	const onClickView = () => {
-		dispatch(headerAlertSlice.actions.viewDanger("ああああ"));
-	};
-	const onClickHidden = () => {
-		dispatch(headerAlertSlice.actions.hidden());
-	};
-	const onClickLoginCustomer = () => {
-		console.log(loginCustomerState);
-	};
-
 	// URLが変更された際に実行される処理
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
@@ -103,19 +92,6 @@ const Layout = (props: any) => {
 						</Navbar.Collapse>
 					</Container>
 				</Navbar>
-				<Button onClick={onClickView} variant="primary" className="me-2">
-					onClickView
-				</Button>
-				<Button onClick={onClickHidden} variant="primary" className="me-2">
-					onClickHidden
-				</Button>
-				<Button
-					onClick={onClickLoginCustomer}
-					variant="primary"
-					className="me-2"
-				>
-					onClickLoginCustomer
-				</Button>
 				{headerAlertState.viewflag && (
 					<HeaderAlert
 						variant={headerAlertState.variant}
