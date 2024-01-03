@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import utilStyles from "@/styles/utils.module.css";
 import { customerRegister } from "@/components/auth/customerRegister";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";

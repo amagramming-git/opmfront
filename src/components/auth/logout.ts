@@ -1,4 +1,7 @@
+import { setCookie } from "typescript-cookie";
+
 export const logout = () => {
-	window.sessionStorage.setItem("token", "");
+	setCookie("token", "");
+	setCookie("XSRF-TOKEN", "");
 	window.sessionStorage.setItem("XSRF-TOKEN", "");
 };

@@ -21,6 +21,11 @@ const headerAlertSlice = createSlice({
 			variant: "danger",
 			message: action.payload,
 		}),
+		viewSuccess: (state, action: PayloadAction<string>) => ({
+			viewflag: true,
+			variant: "success",
+			message: action.payload,
+		}),
 		hidden: (state) => ({
 			viewflag: false,
 			variant: "danger",
