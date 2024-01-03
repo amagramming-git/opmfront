@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "typescript-cookie";
 
 export const customerRegister = (
 	email: string,
@@ -20,12 +19,6 @@ export const customerRegister = (
 			)
 			.then((response) => {
 				if (response.data.result == "0") {
-					const xsrftoken = getCookie("XSRF-TOKEN");
-					if (xsrftoken) {
-						window.sessionStorage.setItem("XSRF-TOKEN", xsrftoken);
-					} else {
-						throw new Error("XSRF-TOKENが取得できません");
-					}
 					resolve(response);
 				} else {
 					throw new Error(response.data.message.message);

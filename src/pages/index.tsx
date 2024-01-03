@@ -5,7 +5,7 @@ import { Button, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
 import { useAppDispatch } from "@/store/hook";
-import { getCookie } from "typescript-cookie";
+import Cookies from "js-cookie";
 
 type FormInputs = {
 	content: string;
@@ -13,15 +13,18 @@ type FormInputs = {
 
 const Home: NextPage = () => {
 	const dispatch = useAppDispatch();
+
 	const [flg, setFlg] = useState(false);
-	const { register, handleSubmit } = useForm<FormInputs>();
+	const { register, handleSubmit, setValue } = useForm<FormInputs>();
 
 	const onSubmit = (data: FormInputs) => {
-		const token = getCookie("token");
+		dispatch(headerAlertSlice.actions.hidden());
+		const token = Cookies.get("token");
 		if (token) {
 			insertPost(data.content, token)
 				.then((res) => {
 					dispatch(headerAlertSlice.actions.viewSuccess("保存しました。"));
+					setValue("content", "");
 				})
 				.catch((e) => {
 					dispatch(
@@ -30,6 +33,10 @@ const Home: NextPage = () => {
 						)
 					);
 				});
+		} else {
+			dispatch(
+				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
+			);
 		}
 	};
 

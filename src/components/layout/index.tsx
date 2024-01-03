@@ -9,7 +9,7 @@ import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
 import { cookielogin } from "@/components/auth/cookielogin";
 import HeaderAlert from "./HeaderAlert";
 import { logout } from "../auth/logout";
-import { getCookie } from "typescript-cookie";
+import Cookies from "js-cookie";
 
 const Layout = (props: any) => {
 	const headerAlertState = useAppSelector((state) => state.headerAlert);
@@ -18,7 +18,7 @@ const Layout = (props: any) => {
 
 	// React初回マウント時にCookieが存在すれば自動的にログインを実施する
 	useEffect(() => {
-		const jwtToken = getCookie("token");
+		const jwtToken = Cookies.get("token");
 		if (jwtToken) {
 			cookielogin(jwtToken)
 				.then((res) => {

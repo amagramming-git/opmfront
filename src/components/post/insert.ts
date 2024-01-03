@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "typescript-cookie";
+import Cookies from "js-cookie";
 
 export const insertPost = (content: string, token: string) => {
 	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
@@ -11,7 +11,7 @@ export const insertPost = (content: string, token: string) => {
 					headers: {
 						Authorization: "Bearer " + token,
 						"Content-Type": "application/json",
-						"X-XSRF-TOKEN": window.sessionStorage.getItem("XSRF-TOKEN"),
+						// "X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN"),
 					},
 					withCredentials: true,
 					data: {},
@@ -25,7 +25,7 @@ export const insertPost = (content: string, token: string) => {
 				}
 			})
 			.catch((e) => {
-				console.log("insertPost");
+				console.log("insertPostにてエラーが発生しました。");
 				console.log(e);
 				rejects(e);
 			});
