@@ -10,6 +10,7 @@ import { cookielogin } from "@/components/auth/cookielogin";
 import HeaderAlert from "./HeaderAlert";
 import { logout } from "../auth/logout";
 import Cookies from "js-cookie";
+import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 
 const Layout = (props: any) => {
 	const headerAlertState = useAppSelector((state) => state.headerAlert);
@@ -19,7 +20,7 @@ const Layout = (props: any) => {
 
 	// React初回マウント時にCookieが存在すれば自動的にログインを実施する
 	useEffect(() => {
-		const jwtToken = Cookies.get("token");
+		const jwtToken = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (jwtToken) {
 			cookielogin(jwtToken)
 				.then((res) => {

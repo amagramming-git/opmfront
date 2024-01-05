@@ -7,6 +7,7 @@ import { Button, Container, Form, Row } from "react-bootstrap";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import Cookies from "js-cookie";
+import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 
 type FormInputs = {
 	content: string;
@@ -23,7 +24,7 @@ const Home: NextPage = () => {
 
 	const onSubmit = (data: FormInputs) => {
 		dispatch(headerAlertSlice.actions.hidden());
-		const token = Cookies.get("token");
+		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (token) {
 			insertPost(data.content, token)
 				.then((res) => {

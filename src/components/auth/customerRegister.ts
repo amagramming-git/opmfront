@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from "axios";
+import { errorLogger } from "../util/logger";
+import { ENDPOINTS, ENDPOINT_CONTENT_TYPE } from "@/config/endpointConfig";
 
 export const customerRegister = (
 	email: string,
@@ -7,16 +9,15 @@ export const customerRegister = (
 ) => {
 	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
 		axios
-			.post(
-				`http://127.0.0.1:8080/customer/register`,
-				{ email: email, username: username, password: password },
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-					withCredentials: true,
-				}
-			)
+			.request({
+				method: ENDPOINTS.customerRegister.method,
+				url: ENDPOINTS.customerRegister.url,
+				data: { email: email, username: username, password: password },
+				headers: {
+					"Content-Type": ENDPOINT_CONTENT_TYPE,
+				},
+				withCredentials: true,
+			})
 			.then((response) => {
 				if (response.data.result == "0") {
 					resolve(response);
@@ -25,8 +26,7 @@ export const customerRegister = (
 				}
 			})
 			.catch((e) => {
-				console.log("singup");
-				console.log(e);
+				errorLogger(e, "singupエラー");
 				rejects(e);
 			});
 	});

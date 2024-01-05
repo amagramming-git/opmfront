@@ -1,10 +1,10 @@
 import * as React from "react";
+import { Provider } from "react-redux";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { Provider } from "react-redux";
-import "@/styles/globals.css";
-import store from "@/store";
 import Layout from "@/components/layout";
+import store from "@/store";
+import "@/styles/globals.css";
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 	return (

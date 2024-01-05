@@ -1,8 +1,10 @@
 import { Alert, Container } from "react-bootstrap";
+
 interface Props {
 	variant: string;
 	message: string;
 }
+
 const HeaderAlert = (props: Props) => {
 	return (
 		<Container>
