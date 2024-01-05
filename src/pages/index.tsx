@@ -20,9 +20,10 @@ const Home: NextPage = () => {
 	const { register, handleSubmit, setValue } = useForm<FormInputs>();
 
 	const [hiddenSecond, setHiddenSecond] = useState(0);
-	const sleep = (waitTime: number) =>
-		new Promise((resolve) => setTimeout(resolve, waitTime));
+
 	useEffect(() => {
+		const sleep = (waitTime: number) =>
+			new Promise((resolve) => setTimeout(resolve, waitTime));
 		if (hiddenSecond >= 1) {
 			sleep(1000).then(() => {
 				setHiddenSecond((prev) => prev - 1);
