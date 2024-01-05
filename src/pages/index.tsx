@@ -19,8 +19,18 @@ const Home: NextPage = () => {
 	const router = useRouter();
 	const { register, handleSubmit, setValue } = useForm<FormInputs>();
 
-	const [hiddenTimer, setHiddenTimer] = useState(0);
-	useEffect(() => {}, [hiddenTimer]);
+	const [hiddenSecond, setHiddenSecond] = useState(0);
+	const sleep = (waitTime: number) =>
+		new Promise((resolve) => setTimeout(resolve, waitTime));
+	useEffect(() => {
+		if (hiddenSecond >= 1) {
+			sleep(1000).then(() => {
+				setHiddenSecond((prev) => prev - 1);
+			});
+		} else {
+			dispatch(headerAlertSlice.actions.hidden());
+		}
+	}, [hiddenSecond]);
 
 	const onSubmit = (data: FormInputs) => {
 		dispatch(headerAlertSlice.actions.hidden());
@@ -29,6 +39,7 @@ const Home: NextPage = () => {
 			insertPost(data.content, token)
 				.then((res) => {
 					dispatch(headerAlertSlice.actions.viewSuccess("保存しました。"));
+					setHiddenSecond(2);
 					setValue("content", "");
 				})
 				.catch((e) => {
@@ -81,7 +92,7 @@ const Home: NextPage = () => {
 			) : (
 				<Container>
 					<Row>
-						<h1>メモる</h1>
+						<h1 className="mt-2">メモる</h1>
 						<Form onSubmit={handleSubmit(onSubmit)}>
 							<Form.Group className="mb-3" controlId="formEmail">
 								<Form.Label>Email address</Form.Label>
