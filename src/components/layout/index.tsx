@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Container, Button, Navbar } from "react-bootstrap";
@@ -15,6 +15,7 @@ const Layout = (props: any) => {
 	const headerAlertState = useAppSelector((state) => state.headerAlert);
 	const loginCustomerState = useAppSelector((state) => state.loginCustomer);
 	const dispatch = useAppDispatch();
+	const [isLoading, setIsLoading] = useState(true);
 
 	// React初回マウント時にCookieが存在すれば自動的にログインを実施する
 	useEffect(() => {
@@ -31,7 +32,9 @@ const Layout = (props: any) => {
 								username: res.data.username,
 							})
 						);
+						setIsLoading(false);
 					} else {
+						setIsLoading(false);
 						throw new Error("システムエラー");
 					}
 				})
@@ -42,7 +45,10 @@ const Layout = (props: any) => {
 							"次のエラーが発生しました : " + e.message
 						)
 					);
+					setIsLoading(false);
 				});
+		} else {
+			setIsLoading(false);
 		}
 	}, []);
 
@@ -69,7 +75,7 @@ const Layout = (props: any) => {
 								<>
 									<Link href={"/signout"} className={utilStyles.defaultLink}>
 										<Button variant="outline-secondary" className="me-2">
-											Sign Out
+											ログアウト
 										</Button>
 									</Link>
 									<Navbar.Text>
@@ -80,12 +86,12 @@ const Layout = (props: any) => {
 								<>
 									<Link href={"/signin"} className={utilStyles.defaultLink}>
 										<Button variant="outline-secondary" className="me-2">
-											Sign in
+											ログイン
 										</Button>
 									</Link>
 									<Link href={"/signup"} className={utilStyles.defaultLink}>
 										<Button variant="primary" className="me-2">
-											Sign Up
+											新規登録
 										</Button>
 									</Link>
 								</>
@@ -100,7 +106,7 @@ const Layout = (props: any) => {
 					/>
 				)}
 			</header>
-			<main>{props.children}</main>
+			<main>{!isLoading && props.children}</main>
 		</>
 	);
 };

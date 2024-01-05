@@ -45,6 +45,13 @@ ReduxとTypescript
 https://dev.classmethod.jp/articles/react-typescript-redux-toolkit/
 https://qiita.com/keitakn/items/7433c89ce52073e861a1
 
+BootstrapのFlexについて
+https://www.tohoho-web.com/bootstrap/flex.html
+
+# 今後実装したい内容
+react-spinners
+
+
 # 参考ドキュメント
 ReactBootstrap公式ドキュメント
 https://react-bootstrap.netlify.app/

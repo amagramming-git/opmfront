@@ -11,7 +11,6 @@ export const insertPost = (content: string, token: string) => {
 					headers: {
 						Authorization: "Bearer " + token,
 						"Content-Type": "application/json",
-						// "X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN"),
 					},
 					withCredentials: true,
 					data: {},

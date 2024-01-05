@@ -1,10 +1,11 @@
 import { insertPost } from "@/components/post/insert";
 import type { NextPage } from "next";
-import { useState } from "react";
-import { Button, Container, Form, Row } from "react-bootstrap";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button, Container, Form, Row } from "react-bootstrap";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
-import { useAppDispatch } from "@/store/hook";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
 import Cookies from "js-cookie";
 
 type FormInputs = {
@@ -13,9 +14,12 @@ type FormInputs = {
 
 const Home: NextPage = () => {
 	const dispatch = useAppDispatch();
-
-	const [flg, setFlg] = useState(false);
+	const loginCustomerState = useAppSelector((state) => state.loginCustomer);
+	const router = useRouter();
 	const { register, handleSubmit, setValue } = useForm<FormInputs>();
+
+	const [hiddenTimer, setHiddenTimer] = useState(0);
+	useEffect(() => {}, [hiddenTimer]);
 
 	const onSubmit = (data: FormInputs) => {
 		dispatch(headerAlertSlice.actions.hidden());
@@ -42,7 +46,7 @@ const Home: NextPage = () => {
 
 	return (
 		<>
-			{flg ? (
+			{!loginCustomerState.auth ? (
 				<Container>
 					<Row>
 						<h1 className="mt-3 mb-3 text-center">Open Memo📝</h1>
@@ -51,6 +55,26 @@ const Home: NextPage = () => {
 							<br />
 							機能が追加され次第こちらで紹介します。
 						</p>
+						<div className="d-flex justify-content-center">
+							<Button
+								variant="secondary"
+								onClick={() => {
+									router.push("/signin");
+								}}
+								className="me-2"
+							>
+								ログインページへ
+							</Button>
+							<Button
+								variant="primary"
+								onClick={() => {
+									router.push("/signup");
+								}}
+								className="ms-2"
+							>
+								新規登録ページへ
+							</Button>
+						</div>
 					</Row>
 				</Container>
 			) : (

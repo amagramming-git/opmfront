@@ -68,7 +68,9 @@ const signup = () => {
 					<>
 						<p>登録に成功しました。</p>
 						<Link href={"/signin"}>
-							<Button variant="primary">ログインページへ</Button>
+							<Button variant="primary" onClick={() => {}}>
+								ログインページへ
+							</Button>
 						</Link>
 					</>
 				)}
