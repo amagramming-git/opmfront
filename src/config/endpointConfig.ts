@@ -18,7 +18,7 @@ export const ENDPOINTS = {
 		url: ENDPOINT_BASE + "/post",
 		method: "post",
 	},
-	postSelectAll: {
+	postSelectMine: {
 		url: ENDPOINT_BASE + "/post",
 		method: "get",
 	},

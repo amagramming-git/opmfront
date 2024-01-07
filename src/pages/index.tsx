@@ -95,12 +95,13 @@ const Home: NextPage = () => {
 					<Row>
 						<h1 className="mt-2">メモる</h1>
 						<Form onSubmit={handleSubmit(onSubmit)}>
-							<Form.Group className="mb-3" controlId="formEmail">
-								<Form.Label>Email address</Form.Label>
+							<Form.Group className="mb-3" controlId="content">
+								<Form.Label>メモ内容</Form.Label>
 								<Form.Control
 									{...register("content")}
 									as="textarea"
-									placeholder="Memo Content"
+									placeholder="メモ内容"
+									rows={10}
 								/>
 							</Form.Group>
 							<Button variant="primary" type="submit">

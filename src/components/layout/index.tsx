@@ -1,7 +1,14 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Container, Button, Navbar } from "react-bootstrap";
+import {
+	Container,
+	Button,
+	Navbar,
+	Offcanvas,
+	Nav,
+	NavDropdown,
+} from "react-bootstrap";
 import utilStyles from "@/styles/utils.module.css";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
@@ -63,7 +70,10 @@ const Layout = (props: any) => {
 	return (
 		<>
 			<header>
-				<Navbar className="bg-body-tertiary">
+				<Navbar
+					expand={!isLoading && !loginCustomerState.auth}
+					className="bg-body-tertiary"
+				>
 					<Container>
 						<Navbar.Brand>
 							<Link href={"/"} className={utilStyles.defaultLink}>
@@ -72,18 +82,7 @@ const Layout = (props: any) => {
 						</Navbar.Brand>
 						<Navbar.Toggle />
 						<Navbar.Collapse className="justify-content-end">
-							{loginCustomerState.auth ? (
-								<>
-									<Link href={"/signout"} className={utilStyles.defaultLink}>
-										<Button variant="outline-secondary" className="me-2">
-											ログアウト
-										</Button>
-									</Link>
-									<Navbar.Text>
-										<a href="#profile">{loginCustomerState.username}</a>
-									</Navbar.Text>
-								</>
-							) : (
+							{!isLoading && !loginCustomerState.auth ? (
 								<>
 									<Link href={"/signin"} className={utilStyles.defaultLink}>
 										<Button variant="outline-secondary" className="me-2">
@@ -95,6 +94,21 @@ const Layout = (props: any) => {
 											新規登録
 										</Button>
 									</Link>
+								</>
+							) : (
+								<>
+									<Navbar.Offcanvas placement="end">
+										<Offcanvas.Header closeButton>
+											<Offcanvas.Title>Offcanvas</Offcanvas.Title>
+										</Offcanvas.Header>
+										<Offcanvas.Body>
+											<Nav className="justify-content-end flex-grow-1 pe-3">
+												<Nav.Link href="#profile">プロフィール</Nav.Link>
+												<Nav.Link href="/mypost">メモ一覧</Nav.Link>
+												<Nav.Link href="/signout">ログアウト</Nav.Link>
+											</Nav>
+										</Offcanvas.Body>
+									</Navbar.Offcanvas>
 								</>
 							)}
 						</Navbar.Collapse>
