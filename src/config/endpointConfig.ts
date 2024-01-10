@@ -8,7 +8,7 @@ export const ENDPOINTS = {
 	},
 	customerMe: {
 		url: ENDPOINT_BASE + "/customer/me",
-		method: "post",
+		method: "get",
 	},
 	customerRegister: {
 		url: ENDPOINT_BASE + "/customer/register",
@@ -18,8 +18,12 @@ export const ENDPOINTS = {
 		url: ENDPOINT_BASE + "/post",
 		method: "post",
 	},
-	postSelectMine: {
-		url: ENDPOINT_BASE + "/post",
+	postGetMine: {
+		url: ENDPOINT_BASE + "/post/getmine", //"/post/mine",
+		method: "get",
+	},
+	postSelect: {
+		url: ENDPOINT_BASE + "/post/select", //"/post/mine",
 		method: "get",
 	},
 };

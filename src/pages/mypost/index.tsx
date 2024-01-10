@@ -1,4 +1,4 @@
-import { selectMinePost } from "@/components/post/selectMine";
+import { getMinePost } from "@/components/post/getMine";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
@@ -12,7 +12,7 @@ const mypost = () => {
 	useEffect(() => {
 		const jwtToken = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (jwtToken) {
-			selectMinePost(jwtToken)
+			getMinePost(jwtToken)
 				.then((res) => {
 					console.log(res);
 				})

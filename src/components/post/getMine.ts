@@ -7,13 +7,16 @@ import {
 import { BEARER_TOKEN_HEADER } from "@/config/authConfig";
 import { errorLogger } from "../util/logger";
 
-export const selectMinePost = (token: string) => {
+export const getMinePost = (token: string) => {
 	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
 		axios
 			.request({
-				method: ENDPOINTS.postSelectMine.method,
-				url: ENDPOINTS.postSelectMine.url,
+				method: ENDPOINTS.postGetMine.method,
+				url: ENDPOINTS.postGetMine.url,
 				data: {},
+				// params: {
+				// 	aaa: "aaaa",
+				// },
 				headers: {
 					Authorization: BEARER_TOKEN_HEADER + token,
 					"Content-Type": ENDPOINT_CONTENT_TYPE,
