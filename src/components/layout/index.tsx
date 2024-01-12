@@ -99,7 +99,7 @@ const Layout = (props: any) => {
 								<>
 									<Navbar.Offcanvas placement="end">
 										<Offcanvas.Header closeButton>
-											<Offcanvas.Title>Offcanvas</Offcanvas.Title>
+											<Offcanvas.Title>メニュー</Offcanvas.Title>
 										</Offcanvas.Header>
 										<Offcanvas.Body>
 											<Nav className="justify-content-end flex-grow-1 pe-3">

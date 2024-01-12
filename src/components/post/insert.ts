@@ -24,7 +24,7 @@ export const insertPost = (content: string, token: string) => {
 				if (response.data.result == API_RESULT_SUCCESS) {
 					resolve(response);
 				} else {
-					throw new Error(response.data.message.message);
+					throw new Error(response.data.messages[0].message);
 				}
 			})
 			.catch((e) => {

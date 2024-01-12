@@ -22,7 +22,7 @@ export const customerRegister = (
 				if (response.data.result == "0") {
 					resolve(response);
 				} else {
-					throw new Error(response.data.message.message);
+					throw new Error(response.data.messages[0].message);
 				}
 			})
 			.catch((e) => {

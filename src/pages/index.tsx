@@ -101,7 +101,7 @@ const Home: NextPage = () => {
 									{...register("content")}
 									as="textarea"
 									placeholder="メモ内容"
-									rows={10}
+									rows={16}
 								/>
 							</Form.Group>
 							<Button variant="primary" type="submit">

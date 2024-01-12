@@ -16,9 +16,9 @@ const signout = () => {
 	return (
 		<Container>
 			<Row>
-				<h1 className="mt-3 mb-3">Sign out</h1>
+				<h1 className="mt-3 mb-3">ログアウト</h1>
 				<Button onClick={onClickLogout} variant="secondary" type="submit">
-					Sign out
+					ログアウト
 				</Button>
 			</Row>
 		</Container>

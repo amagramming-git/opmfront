@@ -15,8 +15,12 @@ export const ENDPOINTS = {
 		method: "post",
 	},
 	postInsert: {
-		url: ENDPOINT_BASE + "/post",
+		url: ENDPOINT_BASE + "/post/insert",
 		method: "post",
+	},
+	postUpdate: {
+		url: ENDPOINT_BASE + "/post/update/{id}",
+		method: "put",
 	},
 	postGetMine: {
 		url: ENDPOINT_BASE + "/post/getmine", //"/post/mine",
