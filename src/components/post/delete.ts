@@ -6,37 +6,21 @@ import {
 } from "@/config/endpointConfig";
 import { BEARER_TOKEN_HEADER } from "@/config/authConfig";
 import { errorLogger } from "../util/logger";
-import { Post } from "@/types/post";
 
-export type GetMinePostResponse = {
-	result: string;
-	messages: [
-		{
-			message: string;
-		}
-	];
-	body: {
-		posts: Post[];
-	};
-};
-
-export const getMinePost = (token: string) => {
+export const deletePost = (token: string, postId: number) => {
 	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
 		axios
 			.request({
-				method: ENDPOINTS.postGetMine.method,
-				url: ENDPOINTS.postGetMine.url,
+				method: ENDPOINTS.postDelete.method,
+				url: ENDPOINTS.postDelete.url.replace("{id}", String(postId)),
 				data: {},
-				// params: {
-				// 	aaa: "aaaa",
-				// },
 				headers: {
 					Authorization: BEARER_TOKEN_HEADER + token,
 					"Content-Type": ENDPOINT_CONTENT_TYPE,
 				},
 				withCredentials: true,
 			})
-			.then((response: AxiosResponse<GetMinePostResponse>) => {
+			.then((response) => {
 				if (response.data.result == API_RESULT_SUCCESS) {
 					resolve(response);
 				} else {
@@ -44,7 +28,7 @@ export const getMinePost = (token: string) => {
 				}
 			})
 			.catch((e) => {
-				errorLogger(e, "selectMinePostにてエラーが発生しました。");
+				errorLogger(e, "insertPostにてエラーが発生しました。");
 				rejects(e);
 			});
 	});

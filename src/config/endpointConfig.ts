@@ -22,6 +22,10 @@ export const ENDPOINTS = {
 		url: ENDPOINT_BASE + "/post/update/{id}",
 		method: "put",
 	},
+	postDelete: {
+		url: ENDPOINT_BASE + "/post/delete/{id}",
+		method: "delete",
+	},
 	postGetMine: {
 		url: ENDPOINT_BASE + "/post/getmine",
 		method: "get",

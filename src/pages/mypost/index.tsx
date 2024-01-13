@@ -1,3 +1,4 @@
+import { deletePost } from "@/components/post/delete";
 import { GetMinePostResponse, getMinePost } from "@/components/post/getMine";
 import {
 	getTheFirstChar,
@@ -37,7 +38,33 @@ const mypost = () => {
 			);
 		}
 	}, []);
-
+	const clickHandlerDeletePost = (postid: number) => {
+		dispatch(headerAlertSlice.actions.hidden());
+		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
+		if (token) {
+			deletePost(token, postid)
+				.then((res) => {
+					dispatch(headerAlertSlice.actions.viewSuccess("削除しました。"));
+					setPosts((prev) => {
+						var newPosts = prev.filter(function (prev) {
+							return prev.id != postid;
+						});
+						return newPosts;
+					});
+				})
+				.catch((e) => {
+					dispatch(
+						headerAlertSlice.actions.viewDanger(
+							"次のエラーが発生しました : " + e.message
+						)
+					);
+				});
+		} else {
+			dispatch(
+				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
+			);
+		}
+	};
 	return (
 		<>
 			<Container>
@@ -49,12 +76,7 @@ const mypost = () => {
 								<Card className="me-2 h-100">
 									<Card.Body>
 										<Card.Title>
-											<Link
-												as={`/mypost/${post.id}`}
-												href={{
-													pathname: `/mypost/${post.id}`,
-												}}
-											>
+											<Link href={`/mypost/${post.id}`}>
 												{getTheFirstChar(
 													replaceWhitespaceChar(post.content),
 													16
@@ -70,7 +92,13 @@ const mypost = () => {
 											<small className="text-muted">
 												{post.updatedAt.split("T")[0]}
 											</small>
-											<Button className="btn-sm" variant="danger">
+											<Button
+												onClick={() => {
+													clickHandlerDeletePost(post.id);
+												}}
+												className="btn-sm"
+												variant="danger"
+											>
 												削除
 											</Button>
 										</Card.Text>
