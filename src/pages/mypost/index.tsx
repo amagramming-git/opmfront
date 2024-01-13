@@ -52,10 +52,7 @@ const mypost = () => {
 											<Link
 												as={`/mypost/${post.id}`}
 												href={{
-													pathname: `/mypost/[postId]`,
-													query: {
-														content: post.content,
-													},
+													pathname: `/mypost/${post.id}`,
 												}}
 											>
 												{getTheFirstChar(

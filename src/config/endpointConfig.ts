@@ -23,7 +23,11 @@ export const ENDPOINTS = {
 		method: "put",
 	},
 	postGetMine: {
-		url: ENDPOINT_BASE + "/post/getmine", //"/post/mine",
+		url: ENDPOINT_BASE + "/post/getmine",
+		method: "get",
+	},
+	postSelectByPrimaryKey: {
+		url: ENDPOINT_BASE + "/post/selectbyprimarykey/{id}",
 		method: "get",
 	},
 	postSelect: {

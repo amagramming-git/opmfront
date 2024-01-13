@@ -1,40 +1,59 @@
+import {
+	PostSelectByPrimaryKeyResponse,
+	selectByPrimaryKey,
+} from "@/components/post/selectByPrimaryKey";
 import { updatePost } from "@/components/post/update";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
-import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 type FormInputs = {
 	content: string;
 };
-const postId = () => {
+const mypostupdate = () => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
-	const loginCustomerState = useAppSelector((state) => state.loginCustomer);
 	const { register, handleSubmit, setValue } = useForm<FormInputs>();
+	const params = useParams();
+	const [postid, setPostid] = useState("");
+
 	useEffect(() => {
-		console.log(router.query);
-		if (!router.query.content) {
-			// 値を取得する
-		} else {
-			setValue("content", router.query.content as string);
-		}
 		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (!token) {
 			dispatch(
 				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
 			);
+		} else {
+			if (params) {
+				setPostid(params.postid as string);
+				selectByPrimaryKey(token, Number(params.postid))
+					.then((res: AxiosResponse<PostSelectByPrimaryKeyResponse>) => {
+						setValue("content", res.data.body.post.content);
+					})
+					.catch((e) => {
+						dispatch(
+							headerAlertSlice.actions.viewDanger(
+								"次のエラーが発生しました : " + e.message
+							)
+						);
+					});
+			} else {
+				router.push("/");
+			}
 		}
 	}, []);
+
 	const onSubmit = (data: FormInputs) => {
 		dispatch(headerAlertSlice.actions.hidden());
 		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (token) {
-			updatePost(token, Number(router.query.postId as string), data.content)
+			updatePost(token, Number(postid as string), data.content)
 				.then((res) => {
 					router.push("/mypost");
 				})
@@ -74,4 +93,4 @@ const postId = () => {
 	);
 };
 
-export default postId;
+export default mypostupdate;
