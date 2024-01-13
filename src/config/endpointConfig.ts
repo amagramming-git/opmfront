@@ -34,6 +34,10 @@ export const ENDPOINTS = {
 		url: ENDPOINT_BASE + "/post/selectbyprimarykey/{id}",
 		method: "get",
 	},
+	postSelectPartialMatch: {
+		url: ENDPOINT_BASE + "/post/selectPartialMatch",
+		method: "get",
+	},
 	postSelect: {
 		url: ENDPOINT_BASE + "/post/select", //"/post/mine",
 		method: "get",
