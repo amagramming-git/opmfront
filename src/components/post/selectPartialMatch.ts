@@ -36,7 +36,7 @@ export const selectPartialMatch = (token: string, likeString: string) => {
 				},
 				withCredentials: true,
 			})
-			.then((response: AxiosResponse<PostSelectByPrimaryKeyResponse>) => {
+			.then((response: AxiosResponse<PostSelectPartialMatchResponse>) => {
 				if (response.data.result == API_RESULT_SUCCESS) {
 					resolve(response);
 				} else {

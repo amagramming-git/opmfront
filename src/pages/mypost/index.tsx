@@ -1,3 +1,4 @@
+import PaginationLayout from "@/components/layout/PaginationLayout";
 import { deletePost } from "@/components/post/delete";
 import { GetMinePostResponse, getMinePost } from "@/components/post/getMine";
 import {
@@ -34,6 +35,7 @@ type FormInputs = {
 const mypost = () => {
 	const dispatch = useAppDispatch();
 	const [posts, setPosts] = useState<Post[]>([]);
+	const [currentPage, setCurrentPage] = useState(1);
 	const { register, handleSubmit } = useForm<FormInputs>();
 
 	useEffect(() => {
@@ -158,6 +160,11 @@ const mypost = () => {
 							</Col>
 						))}
 					</CardGroup>
+					<PaginationLayout
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+						endPage={100}
+					/>
 				</Row>
 			</Container>
 		</>
