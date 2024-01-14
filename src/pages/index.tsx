@@ -67,6 +67,10 @@ const Home: NextPage = () => {
 							こちらはメモアプリです。
 							<br />
 							機能が追加され次第こちらで紹介します。
+							<br />
+							こちら開発中のアプリケーションです。
+							<br />
+							何らかの損害や問題が発生しても、開発者は一切の責任を負いません。
 						</p>
 						<div className="d-flex justify-content-center">
 							<Button

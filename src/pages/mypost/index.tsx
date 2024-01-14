@@ -2,9 +2,17 @@ import PaginationLayout from "@/components/layout/PaginationLayout";
 import { deletePost } from "@/components/post/delete";
 import { GetMinePostResponse, getMinePost } from "@/components/post/getMine";
 import {
+	GetMinePostPagingResponse,
+	getMinePagingPost,
+} from "@/components/post/getMinePaging";
+import {
 	PostSelectPartialMatchResponse,
 	selectPartialMatch,
 } from "@/components/post/selectPartialMatch";
+import {
+	PostSelectPartialMatchPagingResponse,
+	selectPartialMatchPaging,
+} from "@/components/post/selectPartialMatchPaging";
 import {
 	getTheFirstChar,
 	replaceWhitespaceChar,
@@ -35,49 +43,64 @@ type FormInputs = {
 const mypost = () => {
 	const dispatch = useAppDispatch();
 	const [posts, setPosts] = useState<Post[]>([]);
+	const [endPage, setEndPage] = useState(0);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [likeString, setLikeString] = useState("");
+	const [isPostDeleteZero, setIsPostDeleteZero] = useState(false);
 	const { register, handleSubmit } = useForm<FormInputs>();
 
 	useEffect(() => {
+		if (!isPostDeleteZero && posts.length == 0 && currentPage != 1) {
+			setIsPostDeleteZero(true);
+			setCurrentPage((prev) => {
+				return prev - 1;
+			});
+			return;
+		}
 		const jwtToken = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (jwtToken) {
-			getMinePost(jwtToken)
-				.then((res: AxiosResponse<GetMinePostResponse>) => {
-					setPosts(res.data.body.posts);
-				})
-				.catch((e) => {
-					dispatch(
-						headerAlertSlice.actions.viewDanger(
-							"次のエラーが発生しました : " + e.message
-						)
-					);
-				});
+			if (likeString == "") {
+				getMinePagingPost(jwtToken, 9, (currentPage - 1) * 9)
+					.then((res: AxiosResponse<GetMinePostPagingResponse>) => {
+						setPosts(res.data.body.posts);
+						setEndPage(Math.ceil(res.data.body.count / 9));
+						setIsPostDeleteZero(false);
+					})
+					.catch((e) => {
+						dispatch(
+							headerAlertSlice.actions.viewDanger(
+								"次のエラーが発生しました : " + e.message
+							)
+						);
+					});
+			} else {
+				selectPartialMatchPaging(jwtToken, likeString, 9, (currentPage - 1) * 9)
+					.then((res: AxiosResponse<PostSelectPartialMatchPagingResponse>) => {
+						console.log(res);
+						setPosts(res.data.body.posts);
+						setEndPage(Math.ceil(res.data.body.count / 9));
+						setIsPostDeleteZero(false);
+					})
+					.catch((e) => {
+						dispatch(
+							headerAlertSlice.actions.viewDanger(
+								"次のエラーが発生しました : " + e.message
+							)
+						);
+					});
+			}
 		} else {
 			dispatch(
 				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
 			);
 		}
-	}, []);
+	}, [currentPage, likeString, posts.length]);
+
 	const onSubmit = (data: FormInputs) => {
-		const jwtToken = Cookies.get(JWT_TOKEN_COOKIE_NAME);
-		if (jwtToken) {
-			selectPartialMatch(jwtToken, data.likeString)
-				.then((res: AxiosResponse<PostSelectPartialMatchResponse>) => {
-					setPosts(res.data.body.posts);
-				})
-				.catch((e) => {
-					dispatch(
-						headerAlertSlice.actions.viewDanger(
-							"次のエラーが発生しました : " + e.message
-						)
-					);
-				});
-		} else {
-			dispatch(
-				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
-			);
-		}
+		setCurrentPage(1);
+		setLikeString(data.likeString);
 	};
+
 	const clickHandlerDeletePost = (postid: number) => {
 		dispatch(headerAlertSlice.actions.hidden());
 		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
@@ -123,6 +146,11 @@ const mypost = () => {
 							検索
 						</Button>
 					</Form>
+					<PaginationLayout
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+						endPage={endPage}
+					/>
 					<CardGroup>
 						{posts.map((post) => (
 							<Col sm={4} className="mb-2" key={post.id}>
@@ -160,11 +188,6 @@ const mypost = () => {
 							</Col>
 						))}
 					</CardGroup>
-					<PaginationLayout
-						currentPage={currentPage}
-						setCurrentPage={setCurrentPage}
-						endPage={100}
-					/>
 				</Row>
 			</Container>
 		</>

@@ -30,12 +30,20 @@ export const ENDPOINTS = {
 		url: ENDPOINT_BASE + "/post/getmine",
 		method: "get",
 	},
+	postGetMinePaging: {
+		url: ENDPOINT_BASE + "/post/getminepaging",
+		method: "get",
+	},
 	postSelectByPrimaryKey: {
 		url: ENDPOINT_BASE + "/post/selectbyprimarykey/{id}",
 		method: "get",
 	},
 	postSelectPartialMatch: {
 		url: ENDPOINT_BASE + "/post/selectPartialMatch",
+		method: "get",
+	},
+	postSelectPartialMatchPaging: {
+		url: ENDPOINT_BASE + "/post/selectpartialmatchpaging",
 		method: "get",
 	},
 	postSelect: {
