@@ -1,7 +1,7 @@
 import { login } from "@/components/auth/login";
 import { Button, Form, Row } from "react-bootstrap";
 import { Container } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
@@ -16,7 +16,12 @@ const signin = () => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 
-	const { register, handleSubmit } = useForm<FormInputs>();
+	const {
+		handleSubmit,
+		formState: { errors },
+		control,
+	} = useForm<FormInputs>();
+
 	const onSubmit = (data: FormInputs) => {
 		login(data.email, data.password)
 			.then((res) => {
@@ -51,19 +56,56 @@ const signin = () => {
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						<Form.Group className="mb-3" controlId="formEmail">
 							<Form.Label>Email address</Form.Label>
-							<Form.Control
-								{...register("email")}
-								type="email"
-								placeholder="Enter email"
+
+							<Controller
+								name="email"
+								control={control}
+								rules={{
+									required: "こちらは入力が必須です。",
+								}}
+								render={({ field }) => (
+									<Form.Control
+										{...field}
+										type="email"
+										placeholder="Enter email"
+										value={field.value || ""}
+										isInvalid={errors.email && true}
+									/>
+								)}
 							/>
+							{errors.email && (
+								<Form.Control.Feedback type="invalid">
+									{errors.email.message}
+								</Form.Control.Feedback>
+							)}
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="formPassword">
 							<Form.Label>Password</Form.Label>
-							<Form.Control
-								{...register("password")}
-								type="password"
-								placeholder="Password"
+							<Controller
+								name="password"
+								control={control}
+								rules={{
+									required: "こちらは入力が必須です。",
+									maxLength: {
+										value: 16,
+										message: "最大16文字まで入力可能です。",
+									},
+								}}
+								render={({ field }) => (
+									<Form.Control
+										{...field}
+										type="password"
+										placeholder="Password"
+										isInvalid={errors.password && true}
+										value={field.value || ""}
+									/>
+								)}
 							/>
+							{errors.password && (
+								<Form.Control.Feedback type="invalid">
+									{errors.password.message}
+								</Form.Control.Feedback>
+							)}
 						</Form.Group>
 						<Button variant="primary" type="submit">
 							Sign in
