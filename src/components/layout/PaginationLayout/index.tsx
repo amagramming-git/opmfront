@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Alert, Container, Pagination } from "react-bootstrap";
+import { Pagination } from "react-bootstrap";
 
 interface Props {
 	currentPage: number;

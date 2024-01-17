@@ -1,4 +1,4 @@
-import { logout } from "@/components/auth/logout";
+import { logout } from "@/api/auth/logout";
 import { Container, Row, Button } from "react-bootstrap";
 import { useAppDispatch } from "@/store/hook";
 import loginCustomerSlice from "@/store/slices/loginCustomerSlice";

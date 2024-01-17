@@ -1,15 +1,19 @@
 import axios, { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { errorLogger } from "../util/logger";
-import { ENDPOINTS, ENDPOINT_CONTENT_TYPE } from "@/config/endpointConfig";
+import { errorLogger } from "../../components/util/logger";
+import {
+	CustomerGetResponse,
+	ENDPOINTS,
+	ENDPOINT_CONTENT_TYPE,
+} from "@/config/endpointConfig";
 import {
 	BASIC_AUTH_HEADER,
 	JWT_TOKEN_COOKIE_NAME,
 	RESPONSE_AUTH_HEADER,
 } from "@/config/authConfig";
 
-export const login = (email: string, password: string) => {
-	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
+export const loginWithPassword = (email: string, password: string) => {
+	return new Promise<AxiosResponse<CustomerGetResponse>>((resolve, rejects) => {
 		axios
 			.request({
 				method: ENDPOINTS.customerGet.method,
@@ -22,7 +26,7 @@ export const login = (email: string, password: string) => {
 				},
 				withCredentials: true,
 			})
-			.then((response) => {
+			.then((response: AxiosResponse<CustomerGetResponse>) => {
 				Cookies.set(
 					JWT_TOKEN_COOKIE_NAME,
 					response.headers[RESPONSE_AUTH_HEADER]
@@ -34,7 +38,7 @@ export const login = (email: string, password: string) => {
 				}
 			})
 			.catch((e) => {
-				errorLogger(e, "login認証エラー");
+				errorLogger(e, "ERROR:loginWithPassword");
 				rejects(e);
 			});
 	});

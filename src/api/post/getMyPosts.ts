@@ -3,46 +3,25 @@ import {
 	API_RESULT_SUCCESS,
 	ENDPOINTS,
 	ENDPOINT_CONTENT_TYPE,
+	PostGetMineResponse,
 } from "@/config/endpointConfig";
 import { BEARER_TOKEN_HEADER } from "@/config/authConfig";
-import { errorLogger } from "../util/logger";
-import { Post } from "@/types/post";
+import { errorLogger } from "../../components/util/logger";
 
-export type GetMinePostPagingResponse = {
-	result: string;
-	messages: [
-		{
-			message: string;
-		}
-	];
-	body: {
-		posts: Post[];
-		count: number;
-	};
-};
-
-export const getMinePagingPost = (
-	token: string,
-	limit: number,
-	offset: number
-) => {
-	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
+export const getMyPosts = (token: string) => {
+	return new Promise<AxiosResponse<PostGetMineResponse>>((resolve, rejects) => {
 		axios
 			.request({
-				method: ENDPOINTS.postGetMinePaging.method,
-				url: ENDPOINTS.postGetMinePaging.url,
+				method: ENDPOINTS.postGetMine.method,
+				url: ENDPOINTS.postGetMine.url,
 				data: {},
-				params: {
-					limit: limit,
-					offset: offset,
-				},
 				headers: {
 					Authorization: BEARER_TOKEN_HEADER + token,
 					"Content-Type": ENDPOINT_CONTENT_TYPE,
 				},
 				withCredentials: true,
 			})
-			.then((response: AxiosResponse<GetMinePostPagingResponse>) => {
+			.then((response: AxiosResponse<PostGetMineResponse>) => {
 				if (response.data.result == API_RESULT_SUCCESS) {
 					resolve(response);
 				} else {

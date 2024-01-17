@@ -1,4 +1,4 @@
-import { login } from "@/components/auth/login";
+import { loginWithPassword } from "@/api/auth/loginWithPassword";
 import { Button, Form, Row } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
@@ -23,15 +23,15 @@ const signin = () => {
 	} = useForm<FormInputs>();
 
 	const onSubmit = (data: FormInputs) => {
-		login(data.email, data.password)
+		loginWithPassword(data.email, data.password)
 			.then((res) => {
-				if (res.data.email !== undefined) {
+				if (res.data.body.email !== undefined) {
 					dispatch(
 						loginCustomerSlice.actions.loginCustomer({
 							auth: true,
-							id: res.data.id,
-							email: res.data.email,
-							username: res.data.username,
+							id: res.data.body.id,
+							email: res.data.body.email,
+							username: res.data.body.username,
 						})
 					);
 				} else {
@@ -62,11 +62,14 @@ const signin = () => {
 								control={control}
 								rules={{
 									required: "こちらは入力が必須です。",
+									pattern: {
+										value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+										message: "Invalid email format",
+									},
 								}}
 								render={({ field }) => (
 									<Form.Control
 										{...field}
-										type="email"
 										placeholder="Enter email"
 										value={field.value || ""}
 										isInvalid={errors.email && true}

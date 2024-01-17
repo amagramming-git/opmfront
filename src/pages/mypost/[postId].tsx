@@ -1,8 +1,8 @@
 import {
 	PostSelectByPrimaryKeyResponse,
 	selectByPrimaryKey,
-} from "@/components/post/selectByPrimaryKey";
-import { updatePost } from "@/components/post/update";
+} from "@/api/post/selectByPrimaryKeyPost";
+import { updatePost } from "@/api/post/updatePost";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";

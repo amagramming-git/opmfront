@@ -1,4 +1,4 @@
-import { insertPost } from "@/components/post/insert";
+import { insertPost } from "@/api/post/insertPost";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

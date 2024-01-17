@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { customerRegister } from "@/components/auth/customerRegister";
+import { registerCustomer } from "@/api/auth/registerCustomer";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
 
@@ -17,7 +17,7 @@ const signup = () => {
 	const [flg, setFlg] = useState(true);
 	const { register, handleSubmit } = useForm<FormInputs>();
 	const onSubmit = (data: FormInputs) => {
-		customerRegister(data.email, data.username, data.password)
+		registerCustomer(data.email, data.username, data.password)
 			.then((res) => {
 				setFlg(false);
 			})

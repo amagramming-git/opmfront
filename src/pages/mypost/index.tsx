@@ -1,18 +1,13 @@
 import PaginationLayout from "@/components/layout/PaginationLayout";
-import { deletePost } from "@/components/post/delete";
-import { GetMinePostResponse, getMinePost } from "@/components/post/getMine";
+import { deletePost } from "@/api/post/deletePost";
 import {
-	GetMinePostPagingResponse,
-	getMinePagingPost,
-} from "@/components/post/getMinePaging";
-import {
-	PostSelectPartialMatchResponse,
-	selectPartialMatch,
-} from "@/components/post/selectPartialMatch";
+	GetMysPostsPagingResponse,
+	getMyPostsPaging,
+} from "@/api/post/getMyPostsPaging";
 import {
 	PostSelectPartialMatchPagingResponse,
 	selectPartialMatchPaging,
-} from "@/components/post/selectPartialMatchPaging";
+} from "@/api/post/selectPartialMatchPostsPaging";
 import {
 	getTheFirstChar,
 	replaceWhitespaceChar,
@@ -20,7 +15,7 @@ import {
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
-import { Post } from "@/types/post";
+import { Post } from "@/types/entity/post";
 import { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import Link from "next/link";
@@ -60,8 +55,8 @@ const mypost = () => {
 		const jwtToken = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (jwtToken) {
 			if (likeString == "") {
-				getMinePagingPost(jwtToken, 9, (currentPage - 1) * 9)
-					.then((res: AxiosResponse<GetMinePostPagingResponse>) => {
+				getMyPostsPaging(jwtToken, 9, (currentPage - 1) * 9)
+					.then((res) => {
 						setPosts(res.data.body.posts);
 						setEndPage(Math.ceil(res.data.body.count / 9));
 						setIsPostDeleteZero(false);
@@ -76,7 +71,6 @@ const mypost = () => {
 			} else {
 				selectPartialMatchPaging(jwtToken, likeString, 9, (currentPage - 1) * 9)
 					.then((res: AxiosResponse<PostSelectPartialMatchPagingResponse>) => {
-						console.log(res);
 						setPosts(res.data.body.posts);
 						setEndPage(Math.ceil(res.data.body.count / 9));
 						setIsPostDeleteZero(false);

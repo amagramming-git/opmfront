@@ -3,12 +3,13 @@ import {
 	API_RESULT_SUCCESS,
 	ENDPOINTS,
 	ENDPOINT_CONTENT_TYPE,
+	PostInsertResponse,
 } from "@/config/endpointConfig";
 import { BEARER_TOKEN_HEADER } from "@/config/authConfig";
-import { errorLogger } from "../util/logger";
+import { errorLogger } from "../../components/util/logger";
 
 export const insertPost = (content: string, token: string) => {
-	return new Promise<AxiosResponse<any, any>>((resolve, rejects) => {
+	return new Promise<AxiosResponse<PostInsertResponse>>((resolve, rejects) => {
 		axios
 			.request({
 				method: ENDPOINTS.postInsert.method,
@@ -20,7 +21,7 @@ export const insertPost = (content: string, token: string) => {
 				},
 				withCredentials: true,
 			})
-			.then((response) => {
+			.then((response: AxiosResponse<PostInsertResponse>) => {
 				if (response.data.result == API_RESULT_SUCCESS) {
 					resolve(response);
 				} else {

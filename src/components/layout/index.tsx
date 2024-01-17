@@ -1,23 +1,16 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import {
-	Container,
-	Button,
-	Navbar,
-	Offcanvas,
-	Nav,
-	NavDropdown,
-} from "react-bootstrap";
+import { Container, Button, Navbar, Offcanvas, Nav } from "react-bootstrap";
 import utilStyles from "@/styles/utils.module.css";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
 import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
-import { cookielogin } from "@/components/auth/cookielogin";
-import HeaderAlert from "./HeaderAlert";
-import { logout } from "../auth/logout";
+import { loginWithJwttoken } from "@/api/auth/loginWithJwttoken";
+import { logout } from "../../api/auth/logout";
 import Cookies from "js-cookie";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
+import HeaderAlert from "./HeaderAlert";
 
 const Layout = (props: any) => {
 	const headerAlertState = useAppSelector((state) => state.headerAlert);
@@ -29,15 +22,15 @@ const Layout = (props: any) => {
 	useEffect(() => {
 		const jwtToken = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (jwtToken) {
-			cookielogin(jwtToken)
+			loginWithJwttoken(jwtToken)
 				.then((res) => {
-					if (res.data.email !== undefined) {
+					if (res.data.body.email !== undefined) {
 						dispatch(
 							loginCustomerSlice.actions.loginCustomer({
 								auth: true,
-								id: res.data.id,
-								email: res.data.email,
-								username: res.data.username,
+								id: res.data.body.id,
+								email: res.data.body.email,
+								username: res.data.body.username,
 							})
 						);
 						setIsLoading(false);
