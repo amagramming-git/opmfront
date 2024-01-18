@@ -1,17 +1,18 @@
+import { Customer } from "@/types/customer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface LoginCustomerState {
 	auth: boolean;
-	id: number;
-	email: string;
-	username: string;
+	customer: Customer;
 }
 
 const initialState: LoginCustomerState = {
 	auth: false,
-	id: 0,
-	email: "",
-	username: "",
+	customer: {
+		id: 0,
+		email: "",
+		username: "",
+	},
 };
 
 const loginCustomerSlice = createSlice({
@@ -20,15 +21,19 @@ const loginCustomerSlice = createSlice({
 	reducers: {
 		loginCustomer: (state, action: PayloadAction<LoginCustomerState>) => ({
 			auth: true,
-			id: action.payload.id,
-			email: action.payload.email,
-			username: action.payload.username,
+			customer: {
+				id: action.payload.customer.id,
+				email: action.payload.customer.email,
+				username: action.payload.customer.username,
+			},
 		}),
 		logoutCustomer: (state) => ({
 			auth: false,
-			id: 0,
-			email: "",
-			username: "",
+			customer: {
+				id: 0,
+				email: "",
+				username: "",
+			},
 		}),
 	},
 });

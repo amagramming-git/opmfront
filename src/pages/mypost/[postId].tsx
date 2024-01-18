@@ -1,12 +1,8 @@
-import {
-	PostSelectByPrimaryKeyResponse,
-	selectByPrimaryKey,
-} from "@/api/post/selectByPrimaryKeyPost";
+import { selectByPrimaryKey } from "@/api/post/selectByPrimaryKeyPost";
 import { updatePost } from "@/api/post/updatePost";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
-import { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,7 +29,7 @@ const mypostupdate = () => {
 			if (params) {
 				setPostid(params.postid as string);
 				selectByPrimaryKey(token, Number(params.postid))
-					.then((res: AxiosResponse<PostSelectByPrimaryKeyResponse>) => {
+					.then((res) => {
 						setValue("content", res.data.body.post.content);
 					})
 					.catch((e) => {

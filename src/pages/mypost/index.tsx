@@ -1,13 +1,7 @@
 import PaginationLayout from "@/components/layout/PaginationLayout";
 import { deletePost } from "@/api/post/deletePost";
-import {
-	GetMysPostsPagingResponse,
-	getMyPostsPaging,
-} from "@/api/post/getMyPostsPaging";
-import {
-	PostSelectPartialMatchPagingResponse,
-	selectPartialMatchPaging,
-} from "@/api/post/selectPartialMatchPostsPaging";
+import { getMyPostsPaging } from "@/api/post/getMyPostsPaging";
+import { selectPartialMatchPaging } from "@/api/post/selectPartialMatchPostsPaging";
 import {
 	getTheFirstChar,
 	replaceWhitespaceChar,
@@ -15,8 +9,7 @@ import {
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertSlice from "@/store/slices/headerAlertSlice";
-import { Post } from "@/types/entity/post";
-import { AxiosResponse } from "axios";
+import { Post } from "@/types/post";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -27,7 +20,6 @@ import {
 	Col,
 	Container,
 	Form,
-	InputGroup,
 	Row,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
@@ -70,7 +62,7 @@ const mypost = () => {
 					});
 			} else {
 				selectPartialMatchPaging(jwtToken, likeString, 9, (currentPage - 1) * 9)
-					.then((res: AxiosResponse<PostSelectPartialMatchPagingResponse>) => {
+					.then((res) => {
 						setPosts(res.data.body.posts);
 						setEndPage(Math.ceil(res.data.body.count / 9));
 						setIsPostDeleteZero(false);

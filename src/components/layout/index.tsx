@@ -28,9 +28,11 @@ const Layout = (props: any) => {
 						dispatch(
 							loginCustomerSlice.actions.loginCustomer({
 								auth: true,
-								id: res.data.body.id,
-								email: res.data.body.email,
-								username: res.data.body.username,
+								customer: {
+									id: res.data.body.id,
+									email: res.data.body.email,
+									username: res.data.body.username,
+								},
 							})
 						);
 						setIsLoading(false);

@@ -1,4 +1,4 @@
-import { Post } from "@/types/entity/post";
+import { Post } from "@/types/post";
 
 export const ENDPOINT_CONTENT_TYPE = "application/json";
 export const API_RESULT_SUCCESS = "0";
@@ -55,7 +55,7 @@ export const ENDPOINTS = {
 };
 
 export interface EndpointResponse {
-	result: string;
+	result: typeof API_RESULT_SUCCESS | typeof API_RESULT_ERROR;
 	messages: [
 		{
 			message: string;
