@@ -2,7 +2,7 @@ import { selectByPrimaryKey } from "@/api/post/selectByPrimaryKeyPost";
 import { updatePost } from "@/api/post/updatePost";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
-import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
 import Cookies from "js-cookie";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ const mypostupdate = () => {
 		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (!token) {
 			dispatch(
-				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
+				headerAlertFlashSlice.actions.viewDanger("再度ログインしてください。")
 			);
 		} else {
 			if (params) {
@@ -34,7 +34,7 @@ const mypostupdate = () => {
 					})
 					.catch((e) => {
 						dispatch(
-							headerAlertSlice.actions.viewDanger(
+							headerAlertFlashSlice.actions.viewDanger(
 								"次のエラーが発生しました : " + e.message
 							)
 						);
@@ -46,7 +46,7 @@ const mypostupdate = () => {
 	}, []);
 
 	const onSubmit = (data: FormInputs) => {
-		dispatch(headerAlertSlice.actions.hidden());
+		dispatch(headerAlertFlashSlice.actions.hidden());
 		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (token) {
 			updatePost(token, Number(postid as string), data.content)
@@ -55,14 +55,14 @@ const mypostupdate = () => {
 				})
 				.catch((e) => {
 					dispatch(
-						headerAlertSlice.actions.viewDanger(
+						headerAlertFlashSlice.actions.viewDanger(
 							"次のエラーが発生しました : " + e.message
 						)
 					);
 				});
 		} else {
 			dispatch(
-				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
+				headerAlertFlashSlice.actions.viewDanger("再度ログインしてください。")
 			);
 		}
 	};

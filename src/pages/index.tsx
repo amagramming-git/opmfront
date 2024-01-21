@@ -1,13 +1,12 @@
-import { insertPost } from "@/api/post/insertPost";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Container, Form, Row } from "react-bootstrap";
-import headerAlertSlice from "@/store/slices/headerAlertSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hook";
 import Cookies from "js-cookie";
+import { insertPost } from "@/api/post/insertPost";
+import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
+import WelcomePage from "@/components/pageTemplate/WelcomePage";
 
 type FormInputs = {
 	content: string;
@@ -16,85 +15,34 @@ type FormInputs = {
 const Home: NextPage = () => {
 	const dispatch = useAppDispatch();
 	const loginCustomerState = useAppSelector((state) => state.loginCustomer);
-	const router = useRouter();
 	const { register, handleSubmit, setValue } = useForm<FormInputs>();
 
-	const [hiddenSecond, setHiddenSecond] = useState(0);
-
-	useEffect(() => {
-		const sleep = (waitTime: number) =>
-			new Promise((resolve) => setTimeout(resolve, waitTime));
-		if (hiddenSecond >= 1) {
-			sleep(1000).then(() => {
-				setHiddenSecond((prev) => prev - 1);
-			});
-		} else {
-			dispatch(headerAlertSlice.actions.hidden());
-		}
-	}, [hiddenSecond]);
-
 	const onSubmit = (data: FormInputs) => {
-		dispatch(headerAlertSlice.actions.hidden());
+		dispatch(headerAlertFlashSlice.actions.hidden());
 		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (token) {
 			insertPost(data.content, token)
 				.then((res) => {
-					dispatch(headerAlertSlice.actions.viewSuccess("保存しました。"));
-					setHiddenSecond(2);
+					dispatch(headerAlertFlashSlice.actions.viewSuccess("保存しました。"));
 					setValue("content", "");
 				})
 				.catch((e) => {
 					dispatch(
-						headerAlertSlice.actions.viewDanger(
+						headerAlertFlashSlice.actions.viewDanger(
 							"次のエラーが発生しました : " + e.message
 						)
 					);
 				});
 		} else {
 			dispatch(
-				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
+				headerAlertFlashSlice.actions.viewDanger("再度ログインしてください。")
 			);
 		}
 	};
 
 	return (
 		<>
-			{!loginCustomerState.auth ? (
-				<Container>
-					<Row>
-						<h1 className="mt-3 mb-3 text-center">Open Memo📝</h1>
-						<p className="text-center">
-							こちらはメモアプリです。
-							<br />
-							機能が追加され次第こちらで紹介します。
-							<br />
-							こちら開発中のアプリケーションです。
-							<br />
-							何らかの損害や問題が発生しても、開発者は一切の責任を負いません。
-						</p>
-						<div className="d-flex justify-content-center">
-							<Button
-								variant="secondary"
-								onClick={() => {
-									router.push("/signin");
-								}}
-								className="me-2"
-							>
-								ログインページへ
-							</Button>
-							<Button
-								variant="primary"
-								onClick={() => {
-									router.push("/signup");
-								}}
-								className="ms-2"
-							>
-								新規登録ページへ
-							</Button>
-						</div>
-					</Row>
-				</Container>
-			) : (
+			{loginCustomerState.auth ? (
 				<Container>
 					<Row>
 						<h1 className="mt-2">メモる</h1>
@@ -114,6 +62,8 @@ const Home: NextPage = () => {
 						</Form>
 					</Row>
 				</Container>
+			) : (
+				<WelcomePage />
 			)}
 		</>
 	);

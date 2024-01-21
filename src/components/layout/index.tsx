@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
 import { Container, Button, Navbar, Offcanvas, Nav } from "react-bootstrap";
 import utilStyles from "@/styles/utils.module.css";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
 import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
 import { loginWithJwttoken } from "@/api/auth/loginWithJwttoken";
-import { logout } from "../../api/auth/logout";
+import { logout } from "@/api/auth/logout";
 import Cookies from "js-cookie";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
-import HeaderAlert from "./HeaderAlert";
+import HeaderOffcanvasFlash from "./HeaderAlertFlash";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const Layout = (props: any) => {
-	const headerAlertState = useAppSelector((state) => state.headerAlert);
-	const loginCustomerState = useAppSelector((state) => state.loginCustomer);
 	const dispatch = useAppDispatch();
+	const HeaderAlertFlashState = useAppSelector((state) => state.headerAlert);
+	const loginCustomerState = useAppSelector((state) => state.loginCustomer);
 	const [isLoading, setIsLoading] = useState(true);
 
 	// React初回マウント時にCookieが存在すれば自動的にログインを実施する
@@ -44,7 +44,7 @@ const Layout = (props: any) => {
 				.catch((e) => {
 					logout();
 					dispatch(
-						headerAlertSlice.actions.viewDanger(
+						headerAlertFlashSlice.actions.viewDanger(
 							"次のエラーが発生しました : " + e.message
 						)
 					);
@@ -59,11 +59,12 @@ const Layout = (props: any) => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 	useEffect(() => {
-		dispatch(headerAlertSlice.actions.hidden());
+		dispatch(headerAlertFlashSlice.actions.hidden());
 	}, [pathname, searchParams]);
 
 	return (
 		<>
+			{HeaderAlertFlashState.viewflag && <HeaderOffcanvasFlash />}
 			<header>
 				<Navbar
 					expand={!isLoading && !loginCustomerState.auth}
@@ -109,12 +110,6 @@ const Layout = (props: any) => {
 						</Navbar.Collapse>
 					</Container>
 				</Navbar>
-				{headerAlertState.viewflag && (
-					<HeaderAlert
-						variant={headerAlertState.variant}
-						message={headerAlertState.message}
-					/>
-				)}
 			</header>
 			<main>{!isLoading && props.children}</main>
 		</>

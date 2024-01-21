@@ -8,7 +8,7 @@ import {
 } from "@/components/util/stringUtil";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
-import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
 import { Post } from "@/types/post";
 import Cookies from "js-cookie";
 import Link from "next/link";
@@ -55,7 +55,7 @@ const mypost = () => {
 					})
 					.catch((e) => {
 						dispatch(
-							headerAlertSlice.actions.viewDanger(
+							headerAlertFlashSlice.actions.viewDanger(
 								"次のエラーが発生しました : " + e.message
 							)
 						);
@@ -69,7 +69,7 @@ const mypost = () => {
 					})
 					.catch((e) => {
 						dispatch(
-							headerAlertSlice.actions.viewDanger(
+							headerAlertFlashSlice.actions.viewDanger(
 								"次のエラーが発生しました : " + e.message
 							)
 						);
@@ -77,7 +77,7 @@ const mypost = () => {
 			}
 		} else {
 			dispatch(
-				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
+				headerAlertFlashSlice.actions.viewDanger("再度ログインしてください。")
 			);
 		}
 	}, [currentPage, likeString, posts.length]);
@@ -88,12 +88,12 @@ const mypost = () => {
 	};
 
 	const clickHandlerDeletePost = (postid: number) => {
-		dispatch(headerAlertSlice.actions.hidden());
+		dispatch(headerAlertFlashSlice.actions.hidden());
 		const token = Cookies.get(JWT_TOKEN_COOKIE_NAME);
 		if (token) {
 			deletePost(token, postid)
 				.then((res) => {
-					dispatch(headerAlertSlice.actions.viewSuccess("削除しました。"));
+					dispatch(headerAlertFlashSlice.actions.viewSuccess("削除しました。"));
 					setPosts((prev) => {
 						var newPosts = prev.filter(function (prev) {
 							return prev.id != postid;
@@ -103,14 +103,14 @@ const mypost = () => {
 				})
 				.catch((e) => {
 					dispatch(
-						headerAlertSlice.actions.viewDanger(
+						headerAlertFlashSlice.actions.viewDanger(
 							"次のエラーが発生しました : " + e.message
 						)
 					);
 				});
 		} else {
 			dispatch(
-				headerAlertSlice.actions.viewDanger("再度ログインしてください。")
+				headerAlertFlashSlice.actions.viewDanger("再度ログインしてください。")
 			);
 		}
 	};

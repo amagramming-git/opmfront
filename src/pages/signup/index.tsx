@@ -4,7 +4,7 @@ import { Button, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { registerCustomer } from "@/api/auth/registerCustomer";
 import { useAppDispatch } from "@/store/hook";
-import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
 
 type FormInputs = {
 	email: string;
@@ -23,7 +23,7 @@ const signup = () => {
 			})
 			.catch((e) => {
 				dispatch(
-					headerAlertSlice.actions.viewDanger(
+					headerAlertFlashSlice.actions.viewDanger(
 						"次のエラーが発生しました : " +
 							(e.response.data.message[0].message || e.message)
 					)
@@ -34,7 +34,7 @@ const signup = () => {
 	return (
 		<Container>
 			<Row>
-				<h1 className="mt-3 mb-3">Sign up</h1>
+				<h1 className="mt-3 mb-3">新規登録</h1>
 				{flg ? (
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						<Form.Group className="mb-3" controlId="formEmail">

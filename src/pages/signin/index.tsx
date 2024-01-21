@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/store/hook";
-import headerAlertSlice from "@/store/slices/headerAlertSlice";
+import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
 import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
 
 type FormInputs = {
@@ -43,7 +43,7 @@ const signin = () => {
 			})
 			.catch((e) => {
 				dispatch(
-					headerAlertSlice.actions.viewDanger(
+					headerAlertFlashSlice.actions.viewDanger(
 						"次のエラーが発生しました : " + e.message
 					)
 				);
@@ -54,21 +54,14 @@ const signin = () => {
 		<>
 			<Container>
 				<Row>
-					<h1 className="mt-3 mb-3">Sign in</h1>
+					<h1 className="mt-3 mb-3">ログイン</h1>
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						<Form.Group className="mb-3" controlId="formEmail">
 							<Form.Label>Email address</Form.Label>
-
 							<Controller
 								name="email"
 								control={control}
-								rules={{
-									required: "こちらは入力が必須です。",
-									pattern: {
-										value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-										message: "Invalid email format",
-									},
-								}}
+								rules={CUSTOMER_EMAIL_VALIDATION}
 								render={({ field }) => (
 									<Form.Control
 										{...field}
@@ -89,13 +82,7 @@ const signin = () => {
 							<Controller
 								name="password"
 								control={control}
-								rules={{
-									required: "こちらは入力が必須です。",
-									maxLength: {
-										value: 16,
-										message: "最大16文字まで入力可能です。",
-									},
-								}}
+								rules={CUSTOMER_PASSWORD_VALIDATION}
 								render={({ field }) => (
 									<Form.Control
 										{...field}
@@ -113,7 +100,7 @@ const signin = () => {
 							)}
 						</Form.Group>
 						<Button variant="primary" type="submit">
-							Sign in
+							ログイン
 						</Button>
 					</Form>
 				</Row>

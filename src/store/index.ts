@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import headerAlertSlice from "./slices/headerAlertSlice";
+import headerAlertFlashSlice from "./slices/headerAlertFlashSlice";
 import loginCustomerSlice from "./slices/loginCustomerSlice";
 
 const store = configureStore({
 	reducer: {
-		headerAlert: headerAlertSlice.reducer,
+		headerAlert: headerAlertFlashSlice.reducer,
 		loginCustomer: loginCustomerSlice.reducer,
 	},
 });
