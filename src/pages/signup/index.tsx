@@ -1,10 +1,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button, Container, Form, Row } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { registerCustomer } from "@/api/auth/registerCustomer";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
+import {
+	CUSTOMER_EMAIL_VALIDATION,
+	CUSTOMER_PASSWORD_VALIDATION,
+	CUSTOMER_USERNAME_VALIDATION,
+} from "@/config/validationConfig";
 
 type FormInputs = {
 	email: string;
@@ -15,7 +20,13 @@ type FormInputs = {
 const signup = () => {
 	const dispatch = useAppDispatch();
 	const [flg, setFlg] = useState(true);
-	const { register, handleSubmit } = useForm<FormInputs>();
+
+	const {
+		handleSubmit,
+		formState: { errors },
+		control,
+	} = useForm<FormInputs>();
+
 	const onSubmit = (data: FormInputs) => {
 		registerCustomer(data.email, data.username, data.password)
 			.then((res) => {
@@ -39,29 +50,70 @@ const signup = () => {
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						<Form.Group className="mb-3" controlId="formEmail">
 							<Form.Label>Email address</Form.Label>
-							<Form.Control
-								{...register("email")}
-								type="email"
-								placeholder="Enter email"
+							<Controller
+								name="email"
+								control={control}
+								rules={CUSTOMER_EMAIL_VALIDATION}
+								render={({ field }) => (
+									<Form.Control
+										{...field}
+										placeholder="Enter email"
+										value={field.value || ""}
+										isInvalid={errors.email && true}
+									/>
+								)}
 							/>
+							{errors.email && (
+								<Form.Control.Feedback type="invalid">
+									{errors.email.message}
+								</Form.Control.Feedback>
+							)}
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="formUsername">
-							<Form.Label>User Name</Form.Label>
-							<Form.Control
-								{...register("username")}
-								placeholder="Enter UserName"
+							<Form.Label>Username</Form.Label>
+							<Controller
+								name="username"
+								control={control}
+								rules={CUSTOMER_USERNAME_VALIDATION}
+								render={({ field }) => (
+									<Form.Control
+										{...field}
+										placeholder="Enter username"
+										value={field.value || ""}
+										isInvalid={errors.username && true}
+									/>
+								)}
 							/>
+							{errors.username && (
+								<Form.Control.Feedback type="invalid">
+									{errors.username.message}
+								</Form.Control.Feedback>
+							)}
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="formPassword">
 							<Form.Label>Password</Form.Label>
-							<Form.Control
-								{...register("password")}
-								type="password"
-								placeholder="Password"
+							<Controller
+								name="password"
+								control={control}
+								rules={CUSTOMER_PASSWORD_VALIDATION}
+								render={({ field }) => (
+									<Form.Control
+										{...field}
+										type="password"
+										placeholder="Password"
+										isInvalid={errors.password && true}
+										value={field.value || ""}
+									/>
+								)}
 							/>
+							{errors.password && (
+								<Form.Control.Feedback type="invalid">
+									{errors.password.message}
+								</Form.Control.Feedback>
+							)}
 						</Form.Group>
 						<Button variant="primary" type="submit">
-							Sign up
+							新規登録
 						</Button>
 					</Form>
 				) : (

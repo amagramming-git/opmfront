@@ -6,6 +6,10 @@ import { useRouter } from "next/router";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
 import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
+import {
+	CUSTOMER_EMAIL_VALIDATION,
+	CUSTOMER_PASSWORD_VALIDATION,
+} from "@/config/validationConfig";
 
 type FormInputs = {
 	email: string;
