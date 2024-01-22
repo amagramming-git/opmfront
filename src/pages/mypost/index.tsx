@@ -27,7 +27,7 @@ import { useForm } from "react-hook-form";
 type FormInputs = {
 	likeString: string;
 };
-const mypost = () => {
+const MyPost = () => {
 	const dispatch = useAppDispatch();
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [endPage, setEndPage] = useState(0);
@@ -180,4 +180,4 @@ const mypost = () => {
 	);
 };
 
-export default mypost;
+export default MyPost;

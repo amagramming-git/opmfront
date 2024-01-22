@@ -16,7 +16,7 @@ type FormInputs = {
 	password: string;
 };
 
-const signin = () => {
+const SignIn = () => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 
@@ -113,4 +113,4 @@ const signin = () => {
 	);
 };
 
-export default signin;
+export default SignIn;

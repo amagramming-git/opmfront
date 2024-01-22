@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 type FormInputs = {
 	content: string;
 };
-const mypostupdate = () => {
+const MyPostUpdate = () => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const { register, handleSubmit, setValue } = useForm<FormInputs>();
@@ -89,4 +89,4 @@ const mypostupdate = () => {
 	);
 };
 
-export default mypostupdate;
+export default MyPostUpdate;

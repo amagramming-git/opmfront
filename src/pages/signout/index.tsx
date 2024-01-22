@@ -4,7 +4,7 @@ import { useAppDispatch } from "@/store/hook";
 import loginCustomerSlice from "@/store/slices/loginCustomerSlice";
 import { useRouter } from "next/router";
 
-const signout = () => {
+const SignOut = () => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 
@@ -25,4 +25,4 @@ const signout = () => {
 	);
 };
 
-export default signout;
+export default SignOut;

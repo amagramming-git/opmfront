@@ -17,7 +17,7 @@ type FormInputs = {
 	password: string;
 };
 
-const signup = () => {
+const SignUp = () => {
 	const dispatch = useAppDispatch();
 	const [flg, setFlg] = useState(true);
 
@@ -131,4 +131,4 @@ const signup = () => {
 	);
 };
 
-export default signup;
+export default SignUp;

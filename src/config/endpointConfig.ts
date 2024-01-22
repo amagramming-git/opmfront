@@ -9,47 +9,47 @@ const ENDPOINT_HOST = process.env.NEXT_PUBLIC_ENDPOINT_HOST;
 const ENDPOINT_BASE = ENDPOINT_PROTOCOL + "://" + ENDPOINT_HOST;
 export const ENDPOINTS = {
 	customerGet: {
-		url: ENDPOINT_BASE + "/customer/get",
+		url: ENDPOINT_BASE + "/api/customer/get",
 		method: "get",
 	},
 	customerMe: {
-		url: ENDPOINT_BASE + "/customer/me",
+		url: ENDPOINT_BASE + "/api/customer/me",
 		method: "get",
 	},
 	customerRegister: {
-		url: ENDPOINT_BASE + "/customer/register",
+		url: ENDPOINT_BASE + "/api/customer/register",
 		method: "post",
 	},
 	postGetMine: {
-		url: ENDPOINT_BASE + "/post/getmine",
+		url: ENDPOINT_BASE + "/api/post/getmine",
 		method: "get",
 	},
 	postGetMinePaging: {
-		url: ENDPOINT_BASE + "/post/getminepaging",
+		url: ENDPOINT_BASE + "/api/post/getminepaging",
 		method: "get",
 	},
 	postSelectByPrimaryKeyId: {
-		url: ENDPOINT_BASE + "/post/selectbyprimarykey/{id}",
+		url: ENDPOINT_BASE + "/api/post/selectbyprimarykey/{id}",
 		method: "get",
 	},
 	postSelectPartialMatch: {
-		url: ENDPOINT_BASE + "/post/selectpartialmatch",
+		url: ENDPOINT_BASE + "/api/post/selectpartialmatch",
 		method: "get",
 	},
 	postSelectPartialMatchPaging: {
-		url: ENDPOINT_BASE + "/post/selectpartialmatchpaging",
+		url: ENDPOINT_BASE + "/api/post/selectpartialmatchpaging",
 		method: "get",
 	},
 	postInsert: {
-		url: ENDPOINT_BASE + "/post/insert",
+		url: ENDPOINT_BASE + "/api/post/insert",
 		method: "post",
 	},
 	postUpdateId: {
-		url: ENDPOINT_BASE + "/post/update/{id}",
+		url: ENDPOINT_BASE + "/api/post/update/{id}",
 		method: "put",
 	},
 	postDeleteId: {
-		url: ENDPOINT_BASE + "/post/delete/{id}",
+		url: ENDPOINT_BASE + "/api/post/delete/{id}",
 		method: "delete",
 	},
 };
