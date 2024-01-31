@@ -24,6 +24,17 @@ npm install @types/react-redux @types/redux-logger --save-dev
 npm i js-cookie
 npm i --save-dev @types/js-cookie
 
+# よく実行するコマンド
+npm run dev 開発環境起動コマンド
+(npm run build)
+(npm run start)
+
+# 公式のDockerFileサンプル
+https://github.com/vercel/next.js/tree/canary/examples/with-docker-compose/next-app
+https://qiita.com/piny940/items/e30f219f98bb3b87af18 参考
+docker build --tag=kambe/opmfront:1.0 .
+docker run --detach -p 3000:3000 --network opmback_opm_network --name opmfront kambe/opmfront:1.0
+
 # 参考資料関係
 
 認証関係の参考に

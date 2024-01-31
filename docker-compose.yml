@@ -1,0 +1,23 @@
+services:
+  next:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    container_name: next
+    tty: true
+    working_dir: /opmfront #コンテナ内のワーキングディレクトリ
+    volumes:
+      - type: bind # source(ホストマシン)のディレクトリをtarget(コンテナ)にマウントする
+        source: .
+        target: /opmfront
+    ports:
+      - 3000:3000
+    # Overrides default command so things don't shut down after the process ends.
+    networks:
+      - opm_network
+
+networks:
+  opm_network:
+    name: opmback_opm_network
+    driver: bridge
+    external: true # SpringBoot側のdocker-composeが作成されている前提で、そのネットワークを持ってくる
