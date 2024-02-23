@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button, Container, Form, Row } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { registerCustomer } from "@/api/auth/registerCustomer";
+import { registerCustomer } from "@/axios/auth/registerCustomer";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
 import {

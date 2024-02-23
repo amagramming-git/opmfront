@@ -1,7 +1,7 @@
 import PaginationLayout from "@/components/layout/PaginationLayout";
-import { deletePost } from "@/api/post/deletePost";
-import { getMyPostsPaging } from "@/api/post/getMyPostsPaging";
-import { selectPartialMatchPaging } from "@/api/post/selectPartialMatchPostsPaging";
+import { deletePost } from "@/axios/post/deletePost";
+import { getMyPostsPaging } from "@/axios/post/getMyPostsPaging";
+import { selectPartialMatchPaging } from "@/axios/post/selectPartialMatchPostsPaging";
 import {
 	getTheFirstChar,
 	replaceWhitespaceChar,

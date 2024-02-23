@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useForm } from "react-hook-form";
 import { Button, Container, Form, Row } from "react-bootstrap";
 import Cookies from "js-cookie";
-import { insertPost } from "@/api/post/insertPost";
+import { insertPost } from "@/axios/post/insertPost";
 import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";

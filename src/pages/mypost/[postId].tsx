@@ -1,5 +1,5 @@
-import { selectByPrimaryKey } from "@/api/post/selectByPrimaryKeyPost";
-import { updatePost } from "@/api/post/updatePost";
+import { selectByPrimaryKey } from "@/axios/post/selectByPrimaryKeyPost";
+import { updatePost } from "@/axios/post/updatePost";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";

@@ -1,4 +1,4 @@
-import { loginWithPassword } from "@/api/auth/loginWithPassword";
+import { loginWithPassword } from "@/axios/auth/loginWithPassword";
 import { Button, Form, Row } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
