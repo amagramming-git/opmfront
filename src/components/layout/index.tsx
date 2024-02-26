@@ -99,7 +99,8 @@ const Layout = (props: any) => {
 										</Offcanvas.Header>
 										<Offcanvas.Body>
 											<Nav className="justify-content-end flex-grow-1 pe-3">
-												<Nav.Link href="#profile">プロフィール</Nav.Link>
+												{/* <Nav.Link href="#profile">プロフィール</Nav.Link> */}
+												<Nav.Link href="/">HOME</Nav.Link>
 												<Nav.Link href="/mypost">メモ一覧</Nav.Link>
 												<Nav.Link href="/signout">ログアウト</Nav.Link>
 											</Nav>

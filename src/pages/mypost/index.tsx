@@ -6,6 +6,7 @@ import {
 	getTheFirstChar,
 	replaceWhitespaceChar,
 } from "@/components/util/stringUtil";
+import utilStyles from "@/styles/utils.module.css";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
@@ -118,7 +119,14 @@ const MyPost = () => {
 		<>
 			<Container>
 				<Row className="align-items-start">
-					<h1 className="mt-3 mb-3">メモ一覧</h1>
+					<div className="d-flex flex-column align-items-start">
+						<h1 className="mt-3 mb-3">メモる</h1>
+						<Link href={"/"} className={utilStyles.defaultLink}>
+							<Button variant="outline-secondary" className="mb-2">
+								新規メモ画面へ
+							</Button>
+						</Link>
+					</div>
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						<Form.Group className="mb-2" controlId="formEmail">
 							<Form.Control

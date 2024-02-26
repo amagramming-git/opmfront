@@ -1,6 +1,8 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Button, Container, Form, Row } from "react-bootstrap";
+import utilStyles from "@/styles/utils.module.css";
 import Cookies from "js-cookie";
 import { insertPost } from "@/axios/post/insertPost";
 import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
@@ -45,10 +47,17 @@ const Home: NextPage = () => {
 			{loginCustomerState.auth ? (
 				<Container>
 					<Row>
-						<h1 className="mt-2">メモる</h1>
+						<div className="d-flex flex-column align-items-start">
+							<h1 className="mt-3 mb-3">メモる</h1>
+							<Link href={"/mypost"} className={utilStyles.defaultLink}>
+								<Button variant="outline-secondary" className="mb-2">
+									メモ一覧画面へ
+								</Button>
+							</Link>
+						</div>
 						<Form onSubmit={handleSubmit(onSubmit)}>
 							<Form.Group className="mb-3" controlId="content">
-								<Form.Label>メモ内容</Form.Label>
+								{/* <Form.Label>メモ内容</Form.Label> */}
 								<Form.Control
 									{...register("content")}
 									as="textarea"

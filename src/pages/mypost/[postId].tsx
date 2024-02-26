@@ -1,8 +1,10 @@
 import { selectByPrimaryKey } from "@/axios/post/selectByPrimaryKeyPost";
+import Link from "next/link";
 import { updatePost } from "@/axios/post/updatePost";
 import { JWT_TOKEN_COOKIE_NAME } from "@/config/authConfig";
 import { useAppDispatch } from "@/store/hook";
 import headerAlertFlashSlice from "@/store/slices/headerAlertFlashSlice";
+import utilStyles from "@/styles/utils.module.css";
 import Cookies from "js-cookie";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -69,10 +71,24 @@ const MyPostUpdate = () => {
 	return (
 		<Container>
 			<Row>
-				<h1 className="mt-2">メモの更新</h1>
+				<div className="d-flex flex-column align-items-start">
+					<h1 className="mt-3 mb-3">メモる</h1>
+					<div className="d-flex align-items-start">
+						<Link href={"/"} className={utilStyles.defaultLink}>
+							<Button variant="outline-secondary" className="mb-2 me-2">
+								新規メモ画面へ
+							</Button>
+						</Link>
+						<Link href={"/mypost"} className={utilStyles.defaultLink}>
+							<Button variant="outline-secondary" className="mb-2 me-2">
+								メモ一覧画面へ
+							</Button>
+						</Link>
+					</div>
+				</div>
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Form.Group className="mb-3" controlId="content">
-						<Form.Label>メモの更新</Form.Label>
+						{/* <Form.Label>メモの更新</Form.Label> */}
 						<Form.Control
 							{...register("content")}
 							as="textarea"
